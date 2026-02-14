@@ -5,9 +5,25 @@
 package proyecto.pkg1.de.estructuras_graphstream;
 
 /**
- *
- * @author andre
+ *Representa una proteina dentro del grafo de interacciones.
+ * @author Juan Coll
  */
 public class Nodo {
+    /** 
+     * Crea un nuevo nodo con el nombre de la proteina.
+     * @param dato el objeto que contiene la informacion
+    */
+    Object dato;
+    ListaAdyacencia lista;
+    Nodo pNext;
     
+    public Nodo(Object elem){
+        /**
+         * Constructor de la clase Nodo.
+         * @param elem El objeto que representa la proteina a almacenar
+         */
+        this.dato = elem;
+        this.lista = new ListaAdyacencia();    
+        this.pNext = null;
+    }
 }
