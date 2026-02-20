@@ -16,6 +16,9 @@ public class Nodo {
     Object dato;
     ListaAdyacencia lista;
     Nodo pNext;
+    private double distanciaMinima = Double.MAX_VALUE; // Almacena la distancia acomulada desde el Nodo origen
+    private boolean visitado = false; // detecta componentes conexos mediante BFS o DFS
+    private Nodo predecesor = null; // referencia al nodo anterior en la ruta de menos resistencia, permite reconstruir la trayectoria de la ruta metabolica
     
     public Nodo(Object elem){
         /**
