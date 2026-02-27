@@ -24,4 +24,8 @@ public class ListaAuxiliar {
         pNew.pNextAuxiliar = this.pFirst;
         this.pFirst = pNew;
     }   
+    
+    public boolean esVacio(){
+        return this.pFirst == null;
+    }
 }
