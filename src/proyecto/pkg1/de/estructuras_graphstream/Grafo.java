@@ -5,7 +5,7 @@
 package proyecto.pkg1.de.estructuras_graphstream;
 
 /**
- * 
+ * Clase fundamental para el programa, es la representacion de la interaccion entre las proteinas.
  * @author Juan Coll
  */
 public class Grafo {
@@ -45,9 +45,16 @@ public class Grafo {
         if (pOrigen != null && pDestino != null){
             pOrigen.lista.Agregar(pDestino, peso);
             pOrigen.IncrementoGrado();
+            
+            pDestino.lista.Agregar(pOrigen, peso);
+            pDestino.IncrementoGrado();
             // actualiza el Hub si y solo si este nodo tiene mas conexiones.
             if (HubPrincipal == null || pOrigen.ObtenerGrado() > HubPrincipal.ObtenerGrado()){
                 HubPrincipal = pOrigen;
+            }
+            // revisa si el destino es el nuevo Hub
+            if (pDestino.ObtenerGrado() > HubPrincipal.ObtenerGrado()){
+                HubPrincipal = pDestino;
             }
         }
     }
@@ -62,5 +69,34 @@ public class Grafo {
             pActual.AgregarVisitado(false);
             pActual = pActual.pNext;
         }
+    }
+    /**
+     * Metodo que nos ayudara a encontrar los componentes convexos de nuestras interacciones entre proteinas
+     * @param pInicio es la primera proteina que se va a explorar.
+     * @return es para que reciba todos los nodos que visitamos.
+     */
+    public ListaAuxiliar DFS(Nodo pInicio){
+        ListaAuxiliar pVisitados = new ListaAuxiliar();
+        Pila pila = new Pila();
+        
+        ReiniciarVisitados();
+        
+        pila.Apilar(pInicio);
+        pInicio.AgregarVisitado(true);
+        while (!pila.esVacia()){
+            Nodo pActual = pila.Desapilar();
+            pVisitados.insertar(pActual);
+            
+            Arco arco = pActual.lista.ObtenerPrimero();
+            while(arco != null){
+                Nodo pVecino = arco.getDestino();
+                if(!pVecino.esVisitado()){
+                    pVecino.AgregarVisitado(true);
+                    pila.Apilar(pVecino);
+                }
+                arco = arco.ObtenerpNext();
+            }
+        }
+        return pVisitados;
     }
 }
