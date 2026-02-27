@@ -13,9 +13,9 @@ public class Nodo {
      * Crea un nuevo nodo con el nombre de la proteina.
      * @param dato el objeto que contiene la informacion
     */
-    Object dato;
-    ListaAdyacencia lista;
-    Nodo pNext;
+    protected Object dato;
+    protected ListaAdyacencia lista;
+    protected Nodo pNext;
     private double distanciaMinima = Double.MAX_VALUE; // Almacena la distancia acomulada desde el Nodo origen
     private boolean visitado = false; // detecta componentes conexos mediante BFS o DFS
     private Nodo predecesor = null; // referencia al nodo anterior en la ruta de menos resistencia, permite reconstruir la trayectoria de la ruta metabolica
