@@ -30,21 +30,189 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        CambiarGrafo = new javax.swing.JDialog();
+        AgregarProteina = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        EliminarProteina = new javax.swing.JButton();
+        Salir2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        CargarRedDeProteinas = new javax.swing.JButton();
+        Dijkstra = new javax.swing.JButton();
+        Hubs = new javax.swing.JButton();
+        VisualizarGrafo = new javax.swing.JButton();
+        Guardar = new javax.swing.JButton();
+        Salir1 = new javax.swing.JButton();
+        ModificarGrafo = new javax.swing.JButton();
+
+        AgregarProteina.setText("Agregar Proteina");
+        AgregarProteina.addActionListener(this::AgregarProteinaActionPerformed);
+
+        jLabel2.setText("Modificar Grafo");
+
+        EliminarProteina.setText("Eliminar Proteina");
+        EliminarProteina.addActionListener(this::EliminarProteinaActionPerformed);
+
+        Salir2.setText("Salir");
+        Salir2.setAlignmentY(0.8F);
+        Salir2.addActionListener(this::Salir2ActionPerformed);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout CambiarGrafoLayout = new javax.swing.GroupLayout(CambiarGrafo.getContentPane());
+        CambiarGrafo.getContentPane().setLayout(CambiarGrafoLayout);
+        CambiarGrafoLayout.setHorizontalGroup(
+            CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CambiarGrafoLayout.createSequentialGroup()
+                .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CambiarGrafoLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(EliminarProteina)
+                            .addComponent(AgregarProteina))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(CambiarGrafoLayout.createSequentialGroup()
+                        .addGap(153, 153, 153)
+                        .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Salir2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(24, 24, 24))
+        );
+        CambiarGrafoLayout.setVerticalGroup(
+            CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CambiarGrafoLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CambiarGrafoLayout.createSequentialGroup()
+                        .addComponent(AgregarProteina)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(EliminarProteina))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(Salir2)
+                .addGap(36, 36, 36))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Caracteristicas del programa:");
+
+        CargarRedDeProteinas.setText("Cargar Red De Proteinas");
+
+        Dijkstra.setText("Calcular Ruta Metabolica");
+        Dijkstra.addActionListener(this::DijkstraActionPerformed);
+
+        Hubs.setText("Indentificar Hubs");
+        Hubs.addActionListener(this::HubsActionPerformed);
+
+        VisualizarGrafo.setText("Visualizar Grafo");
+        VisualizarGrafo.addActionListener(this::VisualizarGrafoActionPerformed);
+
+        Guardar.setText("Guardar Cambios");
+
+        Salir1.setText("Salir");
+        Salir1.addActionListener(this::Salir1ActionPerformed);
+
+        ModificarGrafo.setText("Modificar Grafo");
+        ModificarGrafo.addActionListener(this::ModificarGrafoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(CargarRedDeProteinas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Hubs)
+                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Dijkstra)
+                    .addComponent(VisualizarGrafo))
+                .addGap(37, 37, 37))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(133, 133, 133)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ModificarGrafo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(Salir1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CargarRedDeProteinas)
+                    .addComponent(Dijkstra))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Hubs)
+                    .addComponent(VisualizarGrafo))
+                .addGap(28, 28, 28)
+                .addComponent(ModificarGrafo)
+                .addGap(32, 32, 32)
+                .addComponent(Guardar)
+                .addGap(32, 32, 32)
+                .addComponent(Salir1)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void VisualizarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarGrafoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_VisualizarGrafoActionPerformed
+
+    private void DijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DijkstraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DijkstraActionPerformed
+
+    private void HubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HubsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HubsActionPerformed
+
+    private void ModificarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarGrafoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ModificarGrafoActionPerformed
+
+    private void Salir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose(); 
+    }//GEN-LAST:event_Salir1ActionPerformed
+
+    private void AgregarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProteinaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AgregarProteinaActionPerformed
+
+    private void EliminarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarProteinaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EliminarProteinaActionPerformed
+
+    private void Salir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Salir2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -72,5 +240,20 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AgregarProteina;
+    private javax.swing.JDialog CambiarGrafo;
+    private javax.swing.JButton CargarRedDeProteinas;
+    private javax.swing.JButton Dijkstra;
+    private javax.swing.JButton EliminarProteina;
+    private javax.swing.JButton Guardar;
+    private javax.swing.JButton Hubs;
+    private javax.swing.JButton ModificarGrafo;
+    private javax.swing.JButton Salir1;
+    private javax.swing.JButton Salir2;
+    private javax.swing.JButton VisualizarGrafo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
