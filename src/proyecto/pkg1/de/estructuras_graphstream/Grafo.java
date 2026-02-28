@@ -80,16 +80,18 @@ public class Grafo {
         Pila pila = new Pila();
         
         ReiniciarVisitados();
-        
+        // el algortimo comienza marcando el inciio y poniendolo en la pila
         pila.Apilar(pInicio);
         pInicio.AgregarVisitado(true);
         while (!pila.esVacia()){
+            // el uso de LIFO nos permite explorar lo mas profundo del grafo
             Nodo pActual = pila.Desapilar();
             pVisitados.insertar(pActual);
             
             Arco arco = pActual.lista.ObtenerPrimero();
             while(arco != null){
                 Nodo pVecino = arco.getDestino();
+                // Si el vecino no ha sido procesado, se marca y se apila para futura exploracion.
                 if(!pVecino.esVisitado()){
                     pVecino.AgregarVisitado(true);
                     pila.Apilar(pVecino);
