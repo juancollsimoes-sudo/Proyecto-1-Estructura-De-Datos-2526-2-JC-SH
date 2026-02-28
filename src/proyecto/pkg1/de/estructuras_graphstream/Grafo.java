@@ -99,4 +99,77 @@ public class Grafo {
         }
         return pVisitados;
     }
+    /**
+     * Prepara el grafo para una ejecucion de Dijkstra.
+     * Coloca la distancia minima de todos los nodos en infinito,
+     * elimina las referencias a predecesores y marca todos los nodos como no visitados.
+     */
+    private void ReiniciarDijkstra(){
+        Nodo pActual = pFirst;
+        while(pActual != null){
+            pActual.AgregarDistanciaMinima(Double.MAX_VALUE);
+            pActual.AgregarPredecesor(null);
+            pActual.AgregarVisitado(false);
+            pActual = pActual.pNext;
+        }
+    }
+    /**
+     * Rastrea los padres desde el destino al inicio para armar el camino
+     * @param pInicio Nodo de partida.
+     * @param pDestino Nodo de llegada.
+     * @return Lista con la ruta desde el inicio hasta el destino
+     */
+    private ListaAuxiliar ReconstruirRuta(Nodo pInicio, Nodo pDestino){
+        ListaAuxiliar ruta = new ListaAuxiliar();
+        Nodo pActual = pDestino;
+        
+        if (pDestino.ObtenerDistanciaMinima() == Double.MAX_VALUE){
+            return ruta;
+        }
+        
+        while (pActual != null){
+            ruta.insertar(pActual);
+            if(pActual == pInicio) break;
+            pActual = pActual.ObtenerPredecesor();
+        }
+        return ruta;
+    }
+    /**
+     * Calcula la ruta de menor resistencia entre dos proteinas.
+     * Usa la cola de prioridad para explorar siempre el camino mas corto
+     * disponible y actualiza las distancia de los nodos vecinos
+     * @param pInicio Nodo de partida.
+     * @param pDestino Nodo objetivo
+     * @return ListaAuxiliar con la ruta optima desde inicio a destino
+     */
+    public ListaAuxiliar Dijkstra(Nodo pInicio, Nodo pDestino){
+        // preparamos el algortimo y creamos la cola de prioridad
+        ReiniciarDijkstra();
+        pInicio.AgregarDistanciaMinima(0);
+        ColaPrioridad cola = new ColaPrioridad();
+        cola.Encolar(pInicio);
+        
+        while(!cola.esVacia()){
+            Nodo pActual = cola.Desencolar();
+            if(pActual == pDestino){
+                break;
+            }
+            Arco arco = pActual.lista.ObtenerPrimero();
+            while (arco != null){ 
+                Nodo pVecino = arco.getDestino();
+                double peso = arco.getPeso();
+                double nuevaDistancia = pActual.ObtenerDistanciaMinima() + peso;
+                // Relajacion de la arista: solo actualizamos si el camino es mas corto
+                if(nuevaDistancia < pVecino.ObtenerDistanciaMinima()){
+                    pVecino.AgregarDistanciaMinima(nuevaDistancia);
+                    pVecino.AgregarPredecesor(pActual);
+                    cola.Encolar(pVecino);
+                }
+                arco = arco.ObtenerpNext();
+            }
+        }
+        // el backtracking reconstruye la ruta a partir de los predecesores marcados
+        return ReconstruirRuta(pInicio, pDestino);
+    }
 }
+
