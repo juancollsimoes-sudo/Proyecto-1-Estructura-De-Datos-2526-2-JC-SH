@@ -14,7 +14,7 @@ public class ColaPrioridad {
     public ColaPrioridad() {
         this.pFirst = null;
     }
-    
+
     public boolean esVacia(){
         return pFirst == null;
     }
@@ -39,16 +39,16 @@ public class ColaPrioridad {
             while (pActual.pNextAuxiliar != null && pActual.pNextAuxiliar.proteina.ObtenerDistanciaMinima() <= proteina.ObtenerDistanciaMinima()){
                 pActual = pActual.pNextAuxiliar;
             }
-            
+
             pNew.pNextAuxiliar = pActual.pNextAuxiliar;
             pActual.pNextAuxiliar = pNew;
         }
     }
-    
+
     /**
      * Saca y devuelve siempre el nodo con la distancia mas corta
      */
-    
+
     public Nodo Desencolar(){
         if (esVacia()){
             return null;
@@ -57,5 +57,5 @@ public class ColaPrioridad {
         pFirst = pFirst.pNextAuxiliar;
         return proteinaExtraida;
     }
-    
+
 }
