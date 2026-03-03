@@ -134,7 +134,7 @@ public class ManejoDeArchivos {
 
     // --- helpers sencillos ---
 
-    private static Nodo obtenerPrimero(Grafo grafo) {
+    public static Nodo obtenerPrimero(Grafo grafo) {
         try {
             java.lang.reflect.Field f = Grafo.class.getDeclaredField("pFirst");
             f.setAccessible(true);
@@ -144,7 +144,7 @@ public class ManejoDeArchivos {
         }
     }
 
-    private static String nombreNodo(Nodo n) {
+    public static String nombreNodo(Nodo n) {
         if (n == null) return "";
         Object d = n.dato;
         if (d == null) return "";
