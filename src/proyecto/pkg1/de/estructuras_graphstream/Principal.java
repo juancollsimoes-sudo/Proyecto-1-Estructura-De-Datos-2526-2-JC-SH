@@ -392,7 +392,7 @@ public class Principal extends javax.swing.JFrame {
             jTextArea1.append("[-] Fallo al agregar: " + texto + " (ya existe)/n");
         } else{
             grafoActual.AgregarNodo(texto);
-            jTextArea1.append("[+] Agregada: " + texto + "/n");
+            jTextArea1.append("[+] Agregada: " + texto);
             jLabel1.setText("Proteina " + texto + " Agregada con exito");
             jLabel4.setText("");
         }
