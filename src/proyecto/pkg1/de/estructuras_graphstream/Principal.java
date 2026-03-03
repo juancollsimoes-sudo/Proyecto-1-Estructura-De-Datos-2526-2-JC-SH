@@ -7,6 +7,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.io.File;
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.*;
 /**
  *
  * @author andre
@@ -207,38 +209,49 @@ public class Principal extends javax.swing.JFrame {
             return;
         }
 
-        Nodo primero = obtenerPrimero(grafoActual);
+        Nodo primero = ManejoDeArchivos.obtenerPrimero(grafoActual);
         if (primero == null) {
             jLabel4.setText("El grafo está vacío.");
             return;
         }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Proteínas y conexiones:\n");
-
-        for (Nodo origen = primero; origen != null; origen = origen.pNext) {
-            String nombreOrigen = nombreNodo(origen);
-            sb.append(nombreOrigen).append(" -> ");
-
-            StringBuilder vecinos = new StringBuilder();
+       
+        System.setProperty("org.graphstream.ui", "swing");
+        Graph graph = new SingleGraph("Red de proteinas");
+        
+        for (Nodo origen = primero; origen != null; origen = origen.pNext){
+            String nombreOrigen = ManejoDeArchivos.nombreNodo(origen);
+            
+            if(graph.getNode(nombreOrigen) == null){
+                Node n = graph.addNode(nombreOrigen);
+                n.setAttribute("ui.label", nombreOrigen);
+            }
             Arco arco = origen.lista.ObtenerPrimero();
-            while (arco != null) {
+            while(arco != null){
                 Nodo destino = arco.getDestino();
-                String nombreDestino = nombreNodo(destino);
+                String nombreDestino = ManejoDeArchivos.nombreNodo(destino);
                 double peso = arco.getPeso();
-                if (vecinos.length() > 0) {
-                    vecinos.append(", ");
+                
+                if(graph.getNode(nombreDestino) == null){
+                    Node n = graph.addNode(nombreDestino);
+                    n.setAttribute("ui.label", nombreDestino);
                 }
-                vecinos.append(nombreDestino).append(" (").append(peso).append(")");
+                
+                String idNodo;
+                if (nombreOrigen.compareTo(nombreDestino) < 0){
+                    idNodo = nombreOrigen + "-" + nombreDestino;
+                } else{
+                    idNodo = nombreDestino + "-" + nombreOrigen;
+                }
+                
+                if (graph.getEdge(idNodo) == null){
+                    Edge e = graph.addEdge(idNodo, nombreOrigen, nombreDestino, false);
+                    e.setAttribute("ui.label", String.valueOf(peso));
+                }
                 arco = arco.ObtenerpNext();
             }
-            sb.append(vecinos);
-            sb.append("\n");
         }
-
-        JOptionPane.showMessageDialog(this, sb.toString(), "Grafo (vista textual)", JOptionPane.INFORMATION_MESSAGE);
-        jLabel1.setText("Visualización textual del grafo mostrada.");
-        jLabel4.setText("");
+        graph.display();
+        jLabel1.setText("Grafo abierto en una nueva ventana de GraphStream");
     }//GEN-LAST:event_VisualizarGrafoActionPerformed
 
     private void DijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DijkstraActionPerformed
