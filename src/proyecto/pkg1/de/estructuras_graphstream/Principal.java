@@ -7,8 +7,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.io.File;
+import java.util.Set;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
+import org.graphstream.ui.view.Viewer;
 /**
  *
  * @author andre
@@ -202,7 +204,9 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * Metodo funcional para el JFrame que usa la libreria externa Graphstream
+ */
     private void VisualizarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarGrafoActionPerformed
         if (grafoActual == null) {
             jLabel4.setText("No hay grafo cargado para visualizar.");
@@ -210,14 +214,38 @@ public class Principal extends javax.swing.JFrame {
         }
 
         Nodo primero = ManejoDeArchivos.obtenerPrimero(grafoActual);
+        //parte de Validacion (si el grafo esta vacio).
         if (primero == null) {
             jLabel4.setText("El grafo está vacío.");
             return;
         }
-       
-        System.setProperty("org.graphstream.ui", "swing");
+        System.setProperty("org.graphstream.ui", "swing"); // esto conecta el motor del graphStream con las ventanas del Jframe.
         Graph graph = new SingleGraph("Red de proteinas");
+
+        //Parte del diseño
+        String desing =
+                "node{"
+                + " fill-color: #3498db;"
+                + " size: 25px;"
+                + " text-size: 14px;"
+                + " text-color: #2c3e50;"
+                + " text-alignment: at-right;"
+                + " text-offset: 8px, 0px;"
+                + " text-background-mode: plain;"
+                + " text-background-color: rgba(255, 255, 255, 200);"
+                + " text-padding: 3px;"
+                + "}"
+                + "edge{"
+                + " fill-color: #bdc3c7;"
+                + " text-size: 11px;"
+                + " text-color: #7f8c8d;"
+                + "}";
+        graph.setAttribute("ui.stylesheet", desing);
+        graph.setAttribute("ui.antialias");
+        graph.setAttribute("layout.force", 0.5);
+        graph.setAttribute("layout.quality", 4);
         
+        // construccion del grafo en GraphStream:
         for (Nodo origen = primero; origen != null; origen = origen.pNext){
             String nombreOrigen = ManejoDeArchivos.nombreNodo(origen);
             
@@ -236,21 +264,22 @@ public class Principal extends javax.swing.JFrame {
                     n.setAttribute("ui.label", nombreDestino);
                 }
                 
-                String idNodo;
+                String idArco;
                 if (nombreOrigen.compareTo(nombreDestino) < 0){
-                    idNodo = nombreOrigen + "-" + nombreDestino;
+                    idArco = nombreOrigen + "-" + nombreDestino;
                 } else{
-                    idNodo = nombreDestino + "-" + nombreOrigen;
+                    idArco = nombreDestino + "-" + nombreOrigen;
                 }
                 
-                if (graph.getEdge(idNodo) == null){
-                    Edge e = graph.addEdge(idNodo, nombreOrigen, nombreDestino, false);
+                if (graph.getEdge(idArco) == null){
+                    Edge e = graph.addEdge(idArco, nombreOrigen, nombreDestino, false);
                     e.setAttribute("ui.label", String.valueOf(peso));
                 }
                 arco = arco.ObtenerpNext();
             }
         }
-        graph.display();
+        Viewer viewer = graph.display();
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
         jLabel1.setText("Grafo abierto en una nueva ventana de GraphStream");
     }//GEN-LAST:event_VisualizarGrafoActionPerformed
 
@@ -434,6 +463,7 @@ public class Principal extends javax.swing.JFrame {
     private void CargarRedDeProteinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarRedDeProteinasActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
+        
         int resultado = chooser.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivo = chooser.getSelectedFile();
