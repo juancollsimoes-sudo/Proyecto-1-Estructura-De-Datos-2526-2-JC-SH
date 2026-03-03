@@ -31,6 +31,8 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         grafoActual = null;
         rutaGrafoActual = null;
+        this.setResizable(true);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -375,27 +377,27 @@ public class Principal extends javax.swing.JFrame {
 
     private void AgregarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProteinaActionPerformed
         if (grafoActual == null) {
-            jLabel4.setText("Debe cargar un grafo antes de agregar proteínas.");
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo antes de agregar proteínas.");
             return;
         }
 
-        String texto = jTextArea1.getText();
+        String texto = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre de la nueva proteina:", "Agregar Proteina", javax.swing.JOptionPane.QUESTION_MESSAGE);
         if (texto == null || texto.trim().isEmpty()) {
             return;
         }
-
-        String[] lineas = texto.split("\\r?\\n");
-        int agregadas = 0;
-        for (String linea : lineas) {
-            String nombre = linea.trim();
-            if (!nombre.isEmpty()) {
-                grafoActual.AgregarNodo(nombre);
-                agregadas++;
-            }
+        texto = texto.trim();
+        
+        if(buscarProteinaEnGrafo(texto) != null){
+            javax.swing.JOptionPane.showMessageDialog(this, "La proteina " + texto + " ya existe en el grafo.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            jTextArea1.append("[-] Fallo al agregar: " + texto + " (ya existe)/n");
+        } else{
+            grafoActual.AgregarNodo(texto);
+            jTextArea1.append("[+] Agregada: " + texto + "/n");
+            jLabel1.setText("Proteina " + texto + " Agregada con exito");
+            jLabel4.setText("");
         }
+        
 
-        jLabel1.setText("Proteínas agregadas: " + agregadas);
-        jLabel4.setText("");
     }//GEN-LAST:event_AgregarProteinaActionPerformed
 
     private void EliminarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarProteinaActionPerformed
@@ -594,6 +596,17 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         return -1;
+    }
+    
+    private Nodo buscarProteinaEnGrafo(String nombre){
+        Nodo actual = ManejoDeArchivos.obtenerPrimero(grafoActual);
+        while(actual != null){
+            if(ManejoDeArchivos.nombreNodo(actual).equalsIgnoreCase(nombre)){
+                return actual;
+            }
+            actual = actual.pNext;
+        }
+        return null;
     }
 
 
