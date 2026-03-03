@@ -210,6 +210,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cargar Red De Proteinas"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CargarRedDeProteinasActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Dijkstra">
       <Properties>
@@ -239,6 +242,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar Cambios"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GuardarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Salir1">
       <Properties>

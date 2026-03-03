@@ -46,7 +46,6 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         CargarRedDeProteinas = new javax.swing.JButton();
         Dijkstra = new javax.swing.JButton();
         Hubs = new javax.swing.JButton();
@@ -54,6 +53,7 @@ public class Principal extends javax.swing.JFrame {
         Guardar = new javax.swing.JButton();
         Salir1 = new javax.swing.JButton();
         ModificarGrafo = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         AgregarProteina.setText("Agregar Proteina");
         AgregarProteina.addActionListener(this::AgregarProteinaActionPerformed);
@@ -110,9 +110,7 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Sin grafo cargado.");
-
-        jLabel4.setText("");
+        jLabel1.setText("Caracteristicas del programa:");
 
         CargarRedDeProteinas.setText("Cargar Red De Proteinas");
         CargarRedDeProteinas.addActionListener(this::CargarRedDeProteinasActionPerformed);
@@ -135,6 +133,8 @@ public class Principal extends javax.swing.JFrame {
         ModificarGrafo.setText("Modificar Grafo");
         ModificarGrafo.addActionListener(this::ModificarGrafoActionPerformed);
 
+        jLabel4.setText("Status");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,30 +142,37 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(CargarRedDeProteinas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Hubs)
+                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Dijkstra)
+                    .addComponent(VisualizarGrafo))
+                .addGap(37, 37, 37))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(122, 122, 122)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(CargarRedDeProteinas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addComponent(Dijkstra))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(Hubs)
-                        .addGap(18, 18, 18)
-                        .addComponent(VisualizarGrafo))
+                        .addGap(159, 159, 159)
+                        .addComponent(Salir1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(133, 133, 133)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ModificarGrafo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(Salir1)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,11 +191,11 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(ModificarGrafo)
                 .addGap(32, 32, 32)
                 .addComponent(Guardar)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(Salir1)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addContainerGap())
         );
 
         pack();
@@ -411,6 +418,50 @@ public class Principal extends javax.swing.JFrame {
         CambiarGrafo.setVisible(false);
     }//GEN-LAST:event_Salir2ActionPerformed
 
+    private void CargarRedDeProteinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarRedDeProteinasActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        int resultado = chooser.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivo = chooser.getSelectedFile();
+            Grafo g = ManejoDeArchivos.cargarGrafo(archivo.getAbsolutePath());
+            if (g != null) {
+                grafoActual = g;
+                rutaGrafoActual = archivo.getAbsolutePath();
+                jLabel1.setText("Grafo cargado: " + archivo.getName());
+                jLabel4.setText("");
+            } else {
+                jLabel1.setText("Sin grafo cargado.");
+                jLabel4.setText("Error al cargar el grafo: " + archivo.getName());
+            }
+        }
+        
+    }//GEN-LAST:event_CargarRedDeProteinasActionPerformed
+
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        // TODO add your handling code here:
+                if (grafoActual == null) {
+            jLabel4.setText("No hay grafo para guardar.");
+            return;
+        }
+
+        // Si ya hay ruta, se sobrescribe; si no, se pregunta dónde guardar.
+        if (rutaGrafoActual == null) {
+            JFileChooser chooser = new JFileChooser();
+            int resultado = chooser.showSaveDialog(this);
+            if (resultado != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            File archivo = chooser.getSelectedFile();
+            rutaGrafoActual = archivo.getAbsolutePath();
+        }
+
+        ManejoDeArchivos.modificarGrafo(rutaGrafoActual, grafoActual);
+        File archivo = new File(rutaGrafoActual);
+        jLabel1.setText("Grafo guardado en: " + archivo.getName());
+        jLabel4.setText("");
+    }//GEN-LAST:event_GuardarActionPerformed
+
     // --- Métodos auxiliares privados ---
 
     private Nodo obtenerPrimero(Grafo grafo) {
@@ -493,46 +544,6 @@ public class Principal extends javax.swing.JFrame {
         return -1;
     }
 
-    private void CargarRedDeProteinasActionPerformed(java.awt.event.ActionEvent evt) {
-        JFileChooser chooser = new JFileChooser();
-        int resultado = chooser.showOpenDialog(this);
-        if (resultado == JFileChooser.APPROVE_OPTION) {
-            File archivo = chooser.getSelectedFile();
-            Grafo g = ManejoDeArchivos.cargarGrafo(archivo.getAbsolutePath());
-            if (g != null) {
-                grafoActual = g;
-                rutaGrafoActual = archivo.getAbsolutePath();
-                jLabel1.setText("Grafo cargado: " + archivo.getName());
-                jLabel4.setText("");
-            } else {
-                jLabel1.setText("Sin grafo cargado.");
-                jLabel4.setText("Error al cargar el grafo: " + archivo.getName());
-            }
-        }
-    }
-
-    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {
-        if (grafoActual == null) {
-            jLabel4.setText("No hay grafo para guardar.");
-            return;
-        }
-
-        // Si ya hay ruta, se sobrescribe; si no, se pregunta dónde guardar.
-        if (rutaGrafoActual == null) {
-            JFileChooser chooser = new JFileChooser();
-            int resultado = chooser.showSaveDialog(this);
-            if (resultado != JFileChooser.APPROVE_OPTION) {
-                return;
-            }
-            File archivo = chooser.getSelectedFile();
-            rutaGrafoActual = archivo.getAbsolutePath();
-        }
-
-        ManejoDeArchivos.modificarGrafo(rutaGrafoActual, grafoActual);
-        File archivo = new File(rutaGrafoActual);
-        jLabel1.setText("Grafo guardado en: " + archivo.getName());
-        jLabel4.setText("");
-    }
 
     /**
      * @param args the command line arguments
