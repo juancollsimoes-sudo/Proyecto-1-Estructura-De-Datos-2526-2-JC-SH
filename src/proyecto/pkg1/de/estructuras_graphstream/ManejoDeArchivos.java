@@ -39,7 +39,7 @@ public class ManejoDeArchivos {
 
                     if (!nombreOrigen.isEmpty() && !nombreDestino.isEmpty()) {
                         if (nombreOrigen.compareTo(nombreDestino) <= 0) {
-                            writer.write(nombreOrigen + ";" + nombreDestino + ";" + Double.toString(peso));
+                            writer.write(nombreOrigen + "," + nombreDestino + "," + Double.toString(peso));
                             writer.newLine();
                         }
                     }
@@ -79,7 +79,7 @@ public class ManejoDeArchivos {
                     continue;
                 }
 
-                String[] partes = linea.split(";");
+                String[] partes = linea.split(",");
                 if (partes.length < 3) {
                     continue;
                 }
