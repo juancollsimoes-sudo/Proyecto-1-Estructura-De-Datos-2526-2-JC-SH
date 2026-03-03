@@ -5,6 +5,7 @@
 package proyecto.pkg1.de.estructuras_graphstream;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import java.io.File;
 /**
  *
@@ -14,11 +15,18 @@ public class Principal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Principal.class.getName());
 
+    private static final int MAX_NODOS = 2000;
+
+    private Grafo grafoActual;
+    private String rutaGrafoActual;
+
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
+        grafoActual = null;
+        rutaGrafoActual = null;
     }
 
     /**
@@ -38,6 +46,7 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         CargarRedDeProteinas = new javax.swing.JButton();
         Dijkstra = new javax.swing.JButton();
         Hubs = new javax.swing.JButton();
@@ -101,9 +110,12 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Caracteristicas del programa:");
+        jLabel1.setText("Sin grafo cargado.");
+
+        jLabel4.setText("");
 
         CargarRedDeProteinas.setText("Cargar Red De Proteinas");
+        CargarRedDeProteinas.addActionListener(this::CargarRedDeProteinasActionPerformed);
 
         Dijkstra.setText("Calcular Ruta Metabolica");
         Dijkstra.addActionListener(this::DijkstraActionPerformed);
@@ -115,6 +127,7 @@ public class Principal extends javax.swing.JFrame {
         VisualizarGrafo.addActionListener(this::VisualizarGrafoActionPerformed);
 
         Guardar.setText("Guardar Cambios");
+        Guardar.addActionListener(this::GuardarActionPerformed);
 
         Salir1.setText("Salir");
         Salir1.addActionListener(this::Salir1ActionPerformed);
@@ -129,32 +142,30 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(CargarRedDeProteinas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Hubs)
-                        .addGap(18, 18, 18)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Dijkstra)
-                    .addComponent(VisualizarGrafo))
-                .addGap(37, 37, 37))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ModificarGrafo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(122, 122, 122)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(CargarRedDeProteinas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addComponent(Dijkstra))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(Hubs)
+                        .addGap(18, 18, 18)
+                        .addComponent(VisualizarGrafo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ModificarGrafo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(159, 159, 159)
                         .addComponent(Salir1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +184,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(ModificarGrafo)
                 .addGap(32, 32, 32)
                 .addComponent(Guardar)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
                 .addComponent(Salir1)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -182,19 +195,128 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VisualizarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarGrafoActionPerformed
-        // TODO add your handling code here:
+        if (grafoActual == null) {
+            jLabel4.setText("No hay grafo cargado para visualizar.");
+            return;
+        }
+
+        Nodo primero = obtenerPrimero(grafoActual);
+        if (primero == null) {
+            jLabel4.setText("El grafo está vacío.");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Proteínas y conexiones:\n");
+
+        for (Nodo origen = primero; origen != null; origen = origen.pNext) {
+            String nombreOrigen = nombreNodo(origen);
+            sb.append(nombreOrigen).append(" -> ");
+
+            StringBuilder vecinos = new StringBuilder();
+            Arco arco = origen.lista.ObtenerPrimero();
+            while (arco != null) {
+                Nodo destino = arco.getDestino();
+                String nombreDestino = nombreNodo(destino);
+                double peso = arco.getPeso();
+                if (vecinos.length() > 0) {
+                    vecinos.append(", ");
+                }
+                vecinos.append(nombreDestino).append(" (").append(peso).append(")");
+                arco = arco.ObtenerpNext();
+            }
+            sb.append(vecinos);
+            sb.append("\n");
+        }
+
+        JOptionPane.showMessageDialog(this, sb.toString(), "Grafo (vista textual)", JOptionPane.INFORMATION_MESSAGE);
+        jLabel1.setText("Visualización textual del grafo mostrada.");
+        jLabel4.setText("");
     }//GEN-LAST:event_VisualizarGrafoActionPerformed
 
     private void DijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DijkstraActionPerformed
-        // TODO add your handling code here:
+        if (grafoActual == null) {
+            jLabel4.setText("Debe cargar un grafo antes de calcular la ruta.");
+            return;
+        }
+
+        String origenNombre = JOptionPane.showInputDialog(this, "Nombre de la proteína origen:");
+        if (origenNombre == null || origenNombre.trim().isEmpty()) {
+            return;
+        }
+        String destinoNombre = JOptionPane.showInputDialog(this, "Nombre de la proteína destino:");
+        if (destinoNombre == null || destinoNombre.trim().isEmpty()) {
+            return;
+        }
+
+        Nodo origen = buscarNodoPorNombre(grafoActual, origenNombre.trim());
+        Nodo destino = buscarNodoPorNombre(grafoActual, destinoNombre.trim());
+
+        if (origen == null || destino == null) {
+            jLabel4.setText("Alguna de las proteínas no existe en el grafo.");
+            return;
+        }
+
+        ListaAuxiliar ruta = grafoActual.Dijkstra(origen, destino);
+        if (ruta == null) {
+            jLabel4.setText("No se pudo calcular la ruta.");
+            return;
+        }
+
+        String textoRuta = rutaComoTexto(ruta, destino);
+        if (textoRuta.isEmpty()) {
+            jLabel4.setText("No existe ruta entre las proteínas seleccionadas.");
+            return;
+        }
+
+        double distancia = destino.ObtenerDistanciaMinima();
+        jLabel1.setText("Ruta: " + textoRuta + " (distancia: " + distancia + ")");
+        jLabel4.setText("");
     }//GEN-LAST:event_DijkstraActionPerformed
 
     private void HubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HubsActionPerformed
-        // TODO add your handling code here:
+        if (grafoActual == null) {
+            jLabel4.setText("Debe cargar un grafo antes de identificar Hubs.");
+            return;
+        }
+
+        Nodo primero = obtenerPrimero(grafoActual);
+        if (primero == null) {
+            jLabel4.setText("El grafo está vacío.");
+            return;
+        }
+
+        Nodo mejor = null;
+        int mejorGrado = -1;
+
+        for (Nodo n = primero; n != null; n = n.pNext) {
+            int grado = n.ObtenerGrado();
+            if (grado > mejorGrado) {
+                mejorGrado = grado;
+                mejor = n;
+            }
+        }
+
+        if (mejor == null) {
+            jLabel4.setText("No se encontró ningún Hub.");
+            return;
+        }
+
+        String nombre = nombreNodo(mejor);
+        jLabel1.setText("Hub principal: " + nombre + " (grado: " + mejorGrado + ")");
+        jLabel4.setText("");
     }//GEN-LAST:event_HubsActionPerformed
 
     private void ModificarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarGrafoActionPerformed
-        // TODO add your handling code here:
+        if (grafoActual == null) {
+            jLabel4.setText("Debe cargar un grafo antes de modificarlo.");
+            return;
+        }
+
+        jTextArea1.setText("");
+        CambiarGrafo.pack();
+        CambiarGrafo.setLocationRelativeTo(this);
+        CambiarGrafo.setVisible(true);
     }//GEN-LAST:event_ModificarGrafoActionPerformed
 
     private void Salir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir1ActionPerformed
@@ -203,16 +325,214 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_Salir1ActionPerformed
 
     private void AgregarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProteinaActionPerformed
-        // TODO add your handling code here:
+        if (grafoActual == null) {
+            jLabel4.setText("Debe cargar un grafo antes de agregar proteínas.");
+            return;
+        }
+
+        String texto = jTextArea1.getText();
+        if (texto == null || texto.trim().isEmpty()) {
+            return;
+        }
+
+        String[] lineas = texto.split("\\r?\\n");
+        int agregadas = 0;
+        for (String linea : lineas) {
+            String nombre = linea.trim();
+            if (!nombre.isEmpty()) {
+                grafoActual.AgregarNodo(nombre);
+                agregadas++;
+            }
+        }
+
+        jLabel1.setText("Proteínas agregadas: " + agregadas);
+        jLabel4.setText("");
     }//GEN-LAST:event_AgregarProteinaActionPerformed
 
     private void EliminarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarProteinaActionPerformed
-        // TODO add your handling code here:
+        if (grafoActual == null) {
+            jLabel4.setText("Debe cargar un grafo antes de eliminar proteínas.");
+            return;
+        }
+
+        String texto = jTextArea1.getText();
+        if (texto == null || texto.trim().isEmpty()) {
+            return;
+        }
+
+        String[] nombresAEliminar = new String[MAX_NODOS];
+        int cantidadEliminar = 0;
+        String[] lineas = texto.split("\\r?\\n");
+        for (String linea : lineas) {
+            String nombre = linea.trim();
+            if (!nombre.isEmpty() && cantidadEliminar < MAX_NODOS) {
+                nombresAEliminar[cantidadEliminar++] = nombre;
+            }
+        }
+
+        Grafo nuevo = new Grafo();
+        Nodo[] viejos = new Nodo[MAX_NODOS];
+        Nodo[] nuevos = new Nodo[MAX_NODOS];
+        int cantidadNodos = 0;
+
+        Nodo primero = obtenerPrimero(grafoActual);
+        for (Nodo n = primero; n != null && cantidadNodos < MAX_NODOS; n = n.pNext) {
+            String nombre = nombreNodo(n);
+            if (!estaEnLista(nombre, nombresAEliminar, cantidadEliminar)) {
+                Nodo nuevoNodo = nuevo.AgregarNodo(nombre);
+                viejos[cantidadNodos] = n;
+                nuevos[cantidadNodos] = nuevoNodo;
+                cantidadNodos++;
+            }
+        }
+
+        for (int i = 0; i < cantidadNodos; i++) {
+            Nodo viejoOrigen = viejos[i];
+            Nodo nuevoOrigen = nuevos[i];
+            Arco arco = viejoOrigen.lista.ObtenerPrimero();
+            while (arco != null) {
+                Nodo viejoDestino = arco.getDestino();
+                int j = indiceDeNodo(viejoDestino, viejos, cantidadNodos);
+                if (j != -1 && i <= j) {
+                    Nodo nuevoDestino = nuevos[j];
+                    double peso = arco.getPeso();
+                    nuevo.AgregarArco(nuevoOrigen, nuevoDestino, peso);
+                }
+                arco = arco.ObtenerpNext();
+            }
+        }
+
+        grafoActual = nuevo;
+        jLabel1.setText("Proteínas eliminadas. Grafo actualizado en memoria.");
+        jLabel4.setText("");
     }//GEN-LAST:event_EliminarProteinaActionPerformed
 
     private void Salir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir2ActionPerformed
-        // TODO add your handling code here:
+        CambiarGrafo.setVisible(false);
     }//GEN-LAST:event_Salir2ActionPerformed
+
+    // --- Métodos auxiliares privados ---
+
+    private Nodo obtenerPrimero(Grafo grafo) {
+        try {
+            java.lang.reflect.Field f = Grafo.class.getDeclaredField("pFirst");
+            f.setAccessible(true);
+            return (Nodo) f.get(grafo);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private String nombreNodo(Nodo n) {
+        if (n == null) return "";
+        Object d = n.dato;
+        if (d == null) return "";
+        return String.valueOf(d).trim();
+    }
+
+    private Nodo buscarNodoPorNombre(Grafo grafo, String nombre) {
+        Nodo primero = obtenerPrimero(grafo);
+        for (Nodo n = primero; n != null; n = n.pNext) {
+            if (nombre.equals(nombreNodo(n))) {
+                return n;
+            }
+        }
+        return null;
+    }
+
+    private String rutaComoTexto(ListaAuxiliar ruta, Nodo destino) {
+        try {
+            java.lang.reflect.Field f = ListaAuxiliar.class.getDeclaredField("pFirst");
+            f.setAccessible(true);
+            Object auxObj = f.get(ruta);
+            if (!(auxObj instanceof NodoAuxiliar)) {
+                return "";
+            }
+            NodoAuxiliar aux = (NodoAuxiliar) auxObj;
+
+            String[] nombres = new String[MAX_NODOS];
+            int cantidad = 0;
+            while (aux != null && cantidad < MAX_NODOS) {
+                Nodo n = aux.proteina;
+                nombres[cantidad++] = nombreNodo(n);
+                aux = aux.pNextAuxiliar;
+            }
+
+            if (cantidad == 0) {
+                return "";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = cantidad - 1; i >= 0; i--) {
+                if (sb.length() > 0) {
+                    sb.append(" -> ");
+                }
+                sb.append(nombres[i]);
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private boolean estaEnLista(String nombre, String[] lista, int cantidad) {
+        for (int i = 0; i < cantidad; i++) {
+            if (nombre.equals(lista[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int indiceDeNodo(Nodo buscado, Nodo[] lista, int cantidad) {
+        for (int i = 0; i < cantidad; i++) {
+            if (lista[i] == buscado) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void CargarRedDeProteinasActionPerformed(java.awt.event.ActionEvent evt) {
+        JFileChooser chooser = new JFileChooser();
+        int resultado = chooser.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivo = chooser.getSelectedFile();
+            Grafo g = ManejoDeArchivos.cargarGrafo(archivo.getAbsolutePath());
+            if (g != null) {
+                grafoActual = g;
+                rutaGrafoActual = archivo.getAbsolutePath();
+                jLabel1.setText("Grafo cargado: " + archivo.getName());
+                jLabel4.setText("");
+            } else {
+                jLabel1.setText("Sin grafo cargado.");
+                jLabel4.setText("Error al cargar el grafo: " + archivo.getName());
+            }
+        }
+    }
+
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        if (grafoActual == null) {
+            jLabel4.setText("No hay grafo para guardar.");
+            return;
+        }
+
+        // Si ya hay ruta, se sobrescribe; si no, se pregunta dónde guardar.
+        if (rutaGrafoActual == null) {
+            JFileChooser chooser = new JFileChooser();
+            int resultado = chooser.showSaveDialog(this);
+            if (resultado != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            File archivo = chooser.getSelectedFile();
+            rutaGrafoActual = archivo.getAbsolutePath();
+        }
+
+        ManejoDeArchivos.modificarGrafo(rutaGrafoActual, grafoActual);
+        File archivo = new File(rutaGrafoActual);
+        jLabel1.setText("Grafo guardado en: " + archivo.getName());
+        jLabel4.setText("");
+    }
 
     /**
      * @param args the command line arguments
@@ -253,6 +573,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton VisualizarGrafo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
