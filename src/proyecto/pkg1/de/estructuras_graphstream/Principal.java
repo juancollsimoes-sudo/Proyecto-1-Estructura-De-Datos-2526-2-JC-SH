@@ -463,10 +463,19 @@ public class Principal extends javax.swing.JFrame {
     private void CargarRedDeProteinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarRedDeProteinasActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
-        
+        javax.swing.filechooser.FileNameExtensionFilter filtro = new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV (*.csv)", "csv"); // solo muestra archivos CSV en la ventana de busqueda
+        chooser.setFileFilter(filtro);
         int resultado = chooser.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivo = chooser.getSelectedFile();
+            String nombreArchivo = archivo.getName().toLowerCase();
+            
+            if(!nombreArchivo.endsWith(".csv")){ // condicional de verificacion si es o no es un archivo CSV
+                jLabel1.setText("Sin grafo cargado.");
+                jLabel4.setText("Error: el archivo debe ser en formato CSV.");
+                javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un archivo de extension .csv", "Archivo no valido",javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             Grafo g = ManejoDeArchivos.cargarGrafo(archivo.getAbsolutePath());
             if (g != null) {
                 grafoActual = g;
