@@ -51,15 +51,17 @@ public class Principal extends javax.swing.JFrame {
         Salir2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         CargarRedDeProteinas = new javax.swing.JButton();
         Dijkstra = new javax.swing.JButton();
         Hubs = new javax.swing.JButton();
         VisualizarGrafo = new javax.swing.JButton();
         Guardar = new javax.swing.JButton();
-        Salir1 = new javax.swing.JButton();
         ModificarGrafo = new javax.swing.JButton();
+        Salir1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        agregararcoboton = new javax.swing.JButton();
 
         AgregarProteina.setText("Agregar Proteina");
         AgregarProteina.addActionListener(this::AgregarProteinaActionPerformed);
@@ -86,8 +88,9 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(CambiarGrafoLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(EliminarProteina)
-                            .addComponent(AgregarProteina))
+                            .addComponent(AgregarProteina)
+                            .addComponent(agregararcoboton)
+                            .addComponent(EliminarProteina))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(CambiarGrafoLayout.createSequentialGroup()
@@ -107,12 +110,17 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(CambiarGrafoLayout.createSequentialGroup()
                         .addComponent(AgregarProteina)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(agregararcoboton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(EliminarProteina))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
                 .addGap(15, 15, 15)
                 .addComponent(Salir2)
                 .addGap(36, 36, 36))
         );
+
+        jButton1.setText("Eliminar Nodo ");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,73 +141,71 @@ public class Principal extends javax.swing.JFrame {
         Guardar.setText("Guardar Cambios");
         Guardar.addActionListener(this::GuardarActionPerformed);
 
-        Salir1.setText("Salir");
-        Salir1.addActionListener(this::Salir1ActionPerformed);
-
         ModificarGrafo.setText("Modificar Grafo");
         ModificarGrafo.addActionListener(this::ModificarGrafoActionPerformed);
 
+        Salir1.setText("Salir");
+        Salir1.addActionListener(this::Salir1ActionPerformed);
+
         jLabel4.setText("Status");
+
+        agregararcoboton.setText("Agregar Arco");
+        agregararcoboton.addActionListener(this::agregararcobotonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(CargarRedDeProteinas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Hubs)
-                        .addGap(18, 18, 18)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Dijkstra)
-                    .addComponent(VisualizarGrafo))
-                .addGap(37, 37, 37))
+                .addGap(14, 14, 14)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(122, 122, 122)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(Salir1)))
+                        .addGap(118, 118, 118)
+                        .addComponent(Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(Salir1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(154, 154, 154)
+                        .addComponent(ModificarGrafo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ModificarGrafo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(VisualizarGrafo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CargarRedDeProteinas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Hubs, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Dijkstra))
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CargarRedDeProteinas)
                     .addComponent(Dijkstra))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Hubs)
                     .addComponent(VisualizarGrafo))
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(ModificarGrafo)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Guardar)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addComponent(Salir1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addContainerGap())
         );
@@ -400,26 +406,83 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_AgregarProteinaActionPerformed
 
+    private void agregararcobotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregararcobotonActionPerformed
+        if (grafoActual == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo antes de agregar arcos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String nodoOrigen = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre del nodo origen:", "Agregar Arco", javax.swing.JOptionPane.QUESTION_MESSAGE);
+        if (nodoOrigen == null || nodoOrigen.trim().isEmpty()) {
+            return;
+        }
+        nodoOrigen = nodoOrigen.trim();
+
+        String nodoDestino = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre del nodo destino:", "Agregar Arco", javax.swing.JOptionPane.QUESTION_MESSAGE);
+        if (nodoDestino == null || nodoDestino.trim().isEmpty()) {
+            return;
+        }
+        nodoDestino = nodoDestino.trim();
+
+        String pesoStr = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el peso del arco:", "Agregar Arco", javax.swing.JOptionPane.QUESTION_MESSAGE);
+        if (pesoStr == null || pesoStr.trim().isEmpty()) {
+            return;
+        }
+
+        try {
+            double peso = Double.parseDouble(pesoStr.trim());
+            
+            Nodo origen = buscarProteinaEnGrafo(nodoOrigen);
+            Nodo destino = buscarProteinaEnGrafo(nodoDestino);
+            
+            if (origen == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El nodo origen '" + nodoOrigen + "' no existe en el grafo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (destino == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El nodo destino '" + nodoDestino + "' no existe en el grafo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            grafoActual.AgregarArco(origen, destino, peso);
+            javax.swing.JOptionPane.showMessageDialog(this, "Arco agregado exitosamente:\n" + nodoOrigen + " -> " + nodoDestino + " (peso: " + peso + ")", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            jTextArea1.append("[+] Arco agregado: " + nodoOrigen + " -> " + nodoDestino + " (peso: " + peso + ")\n");
+            jLabel1.setText("Arco agregado: " + nodoOrigen + " -> " + nodoDestino);
+            jLabel4.setText("");
+            
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El peso debe ser un número válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_agregararcobotonActionPerformed
+
     private void EliminarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarProteinaActionPerformed
         if (grafoActual == null) {
-            jLabel4.setText("Debe cargar un grafo antes de eliminar proteínas.");
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo antes de eliminar proteínas.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        String texto = jTextArea1.getText();
-        if (texto == null || texto.trim().isEmpty()) {
+        String nombreProteina = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre de la proteína a eliminar:", "Eliminar Proteína", javax.swing.JOptionPane.QUESTION_MESSAGE);
+        if (nombreProteina == null || nombreProteina.trim().isEmpty()) {
+            return;
+        }
+        nombreProteina = nombreProteina.trim();
+
+        Nodo nodoAEliminar = buscarProteinaEnGrafo(nombreProteina);
+        if (nodoAEliminar == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La proteína '" + nombreProteina + "' no existe en el grafo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        String[] nombresAEliminar = new String[MAX_NODOS];
-        int cantidadEliminar = 0;
-        String[] lineas = texto.split("\\r?\\n");
-        for (String linea : lineas) {
-            String nombre = linea.trim();
-            if (!nombre.isEmpty() && cantidadEliminar < MAX_NODOS) {
-                nombresAEliminar[cantidadEliminar++] = nombre;
-            }
-        }
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "¿Desea eliminar también los arcos asociados a esta proteína?", 
+            "Eliminar Arcos", 
+            javax.swing.JOptionPane.YES_NO_OPTION, 
+            javax.swing.JOptionPane.QUESTION_MESSAGE);
+        
+        boolean eliminarArcos = (respuesta == javax.swing.JOptionPane.YES_OPTION);
+
+        String[] nombresAEliminar = {nombreProteina};
 
         Grafo nuevo = new Grafo();
         Nodo[] viejos = new Nodo[MAX_NODOS];
@@ -429,7 +492,7 @@ public class Principal extends javax.swing.JFrame {
         Nodo primero = obtenerPrimero(grafoActual);
         for (Nodo n = primero; n != null && cantidadNodos < MAX_NODOS; n = n.pNext) {
             String nombre = nombreNodo(n);
-            if (!estaEnLista(nombre, nombresAEliminar, cantidadEliminar)) {
+            if (!estaEnLista(nombre, nombresAEliminar, nombresAEliminar.length)) {
                 Nodo nuevoNodo = nuevo.AgregarNodo(nombre);
                 viejos[cantidadNodos] = n;
                 nuevos[cantidadNodos] = nuevoNodo;
@@ -454,7 +517,12 @@ public class Principal extends javax.swing.JFrame {
         }
 
         grafoActual = nuevo;
-        jLabel1.setText("Proteínas eliminadas. Grafo actualizado en memoria.");
+        String mensaje = eliminarArcos ? 
+            "Proteína '" + nombreProteina + "' y sus arcos eliminados exitosamente." : 
+            "Proteína '" + nombreProteina + "' eliminada exitosamente.";
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        jTextArea1.append("[-] Eliminada: " + nombreProteina + "\n");
+        jLabel1.setText("Proteína eliminada: " + nombreProteina);
         jLabel4.setText("");
     }//GEN-LAST:event_EliminarProteinaActionPerformed
 
@@ -515,6 +583,10 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setText("Grafo guardado en: " + archivo.getName());
         jLabel4.setText("");
     }//GEN-LAST:event_GuardarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // --- Métodos auxiliares privados ---
 
@@ -647,6 +719,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton Salir1;
     private javax.swing.JButton Salir2;
     private javax.swing.JButton VisualizarGrafo;
+    private javax.swing.JButton agregararcoboton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
