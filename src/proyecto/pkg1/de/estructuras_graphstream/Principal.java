@@ -323,12 +323,14 @@ public class Principal extends javax.swing.JFrame {
 
         String textoRuta = rutaComoTexto(ruta, destino);
         if (textoRuta.isEmpty()) {
-            jLabel4.setText("No existe ruta entre las proteínas seleccionadas.");
+            javax.swing.JOptionPane.showMessageDialog(this, "No existe ruta entre las proteínas seleccionadas.", "Sin Ruta", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         double distancia = destino.ObtenerDistanciaMinima();
-        jLabel1.setText("Ruta: " + textoRuta + " (distancia: " + distancia + ")");
+        String mensaje = "Ruta encontrada:\n" + textoRuta + "\n\nDistancia total: " + distancia;
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Ruta Metabólica Calculada", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        jLabel1.setText("Ruta calculada: " + origenNombre + " -> " + destinoNombre);
         jLabel4.setText("");
     }//GEN-LAST:event_DijkstraActionPerformed
 
@@ -356,12 +358,14 @@ public class Principal extends javax.swing.JFrame {
         }
 
         if (mejor == null) {
-            jLabel4.setText("No se encontró ningún Hub.");
+            javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ningún Hub en el grafo.", "Sin Hubs", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         String nombre = nombreNodo(mejor);
-        jLabel1.setText("Hub principal: " + nombre + " (grado: " + mejorGrado + ")");
+        String mensaje = "Hub principal encontrado:\n\nProteína: " + nombre + "\nGrado: " + mejorGrado + "\n\nEl grado representa el número de conexiones directas que tiene esta proteína con otras en la red.";
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Hub Identificado", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        jLabel1.setText("Hub identificado: " + nombre);
         jLabel4.setText("");
     }//GEN-LAST:event_HubsActionPerformed
 
