@@ -1,5 +1,4 @@
-# Proyecto 1: BioGraph: Análisis de Interacciones Proteicas
-para el Descubrimiento de Fármacos.
+# Proyecto 1: BioGraph: Análisis de Interacciones Proteicas para el Descubrimiento de Fármacos.
 
 Este proyecto consiste en una aplicación de escritorio desarrollada en Java que permite cargar, visualizar y analizar redes de proteínas mediante el uso de grafos. La herramienta facilita la identificación de proteínas clave (Hubs) y el cálculo de rutas óptimas de interacción utilizando algoritmos de teoría de grafos como Dijkstra y DFS
 
