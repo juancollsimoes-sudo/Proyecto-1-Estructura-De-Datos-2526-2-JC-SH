@@ -17,7 +17,7 @@ public class Nodo {
     protected ListaAdyacencia lista;
     protected Nodo pNext;
     private double distanciaMinima = Double.MAX_VALUE; // Almacena la distancia acomulada desde el Nodo origen
-    private boolean visitado = false; // detecta componentes conexos mediante BFS o DFS
+    private boolean visitado = false; // detecta componentes conexos mediante DFS
     private Nodo predecesor = null; // referencia al nodo anterior en la ruta de menos resistencia, permite reconstruir la trayectoria de la ruta metabolica
     private int grado = 0; // sirve para identificar Hubs.
     public Nodo(Object elem){
@@ -41,7 +41,7 @@ public class Nodo {
     }
     /**
      * Estos metodos sirven para marcar por donde ya paso el Nodo.
-     * Es fundamental para Dijkstra y para DFS/DFS.
+     * Es fundamental para Dijkstra y para DFS.
      */
     public boolean esVisitado(){
         return visitado;

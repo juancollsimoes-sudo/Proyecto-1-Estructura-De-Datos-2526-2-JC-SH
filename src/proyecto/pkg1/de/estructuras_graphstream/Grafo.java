@@ -80,7 +80,7 @@ public class Grafo {
         Pila pila = new Pila();
         
         ReiniciarVisitados();
-        // el algortimo comienza marcando el inciio y poniendolo en la pila
+        // el algortimo comienza marcando el incio y poniendolo en la pila
         pila.Apilar(pInicio);
         pInicio.AgregarVisitado(true);
         while (!pila.esVacia()){
