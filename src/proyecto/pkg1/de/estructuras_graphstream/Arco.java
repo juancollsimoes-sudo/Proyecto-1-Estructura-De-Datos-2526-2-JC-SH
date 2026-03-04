@@ -6,7 +6,7 @@ package proyecto.pkg1.de.estructuras_graphstream;
 
 /**
  * Representa una conexion o arista entre dos proteinas en el Grafo.
- * @author andre
+ * @author Juan Coll
  */
 public class Arco {
     private Nodo destino;
