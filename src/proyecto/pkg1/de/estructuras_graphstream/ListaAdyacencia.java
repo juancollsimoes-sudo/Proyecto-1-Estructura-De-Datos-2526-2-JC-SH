@@ -9,6 +9,8 @@ package proyecto.pkg1.de.estructuras_graphstream;
  * 
  * guarda los arcos (conexiones) como una lista enlazada
  * usando la clase Arco.
+ * 
+ * @author Santiago Hernandez
  */
 public class ListaAdyacencia {
 

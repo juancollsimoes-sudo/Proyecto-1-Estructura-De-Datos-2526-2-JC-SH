@@ -14,6 +14,7 @@ import org.graphstream.ui.view.Viewer;
 /**
  *
  * @author andre
+ * @author Santiago Hernandez
  */
 public class Principal extends javax.swing.JFrame {
     

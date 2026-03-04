@@ -7,6 +7,7 @@ package proyecto.pkg1.de.estructuras_graphstream;
 /**
  *
  * @author andre
+ * @author Santiago Hernandez
  */
 public class ManejoDeArchivos {
 
