@@ -606,28 +606,33 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_CargarRedDeProteinasActionPerformed
 
+    // metodo para guardar los cambios del grafo en un archivo csv
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        // TODO add your handling code here:
-                if (grafoActual == null) {
+        // se verifica si hay un grafo para guardar
+        if (grafoActual == null) {
             jLabel4.setText("No hay grafo para guardar.");
             return;
         }
 
-        // Si ya hay ruta, se sobrescribe; si no, se pregunta dónde guardar.
-        if (rutaGrafoActual == null) {
-            JFileChooser chooser = new JFileChooser();
-            int resultado = chooser.showSaveDialog(this);
-            if (resultado != JFileChooser.APPROVE_OPTION) {
-                return;
-            }
-            File archivo = chooser.getSelectedFile();
-            rutaGrafoActual = archivo.getAbsolutePath();
+        // se crea la carpeta archivos csv si no existe
+        File carpetaCsv = new File("archivos csv");
+        if (!carpetaCsv.exists()) {
+            carpetaCsv.mkdirs();
         }
 
-        ManejoDeArchivos.modificarGrafo(rutaGrafoActual, grafoActual);
-        File archivo = new File(rutaGrafoActual);
+        // se genera un nombre de archivo unico con timestamp
+        String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String nombreArchivo = "grafo_" + timestamp + ".csv";
+        File archivo = new File(carpetaCsv, nombreArchivo);
+        
+        // se guarda el grafo en el archivo csv
+        ManejoDeArchivos.modificarGrafo(archivo.getAbsolutePath(), grafoActual);
+        
+        // se actualiza la ruta actual y se muestra mensaje de confirmacion
+        rutaGrafoActual = archivo.getAbsolutePath();
         jLabel1.setText("Grafo guardado en: " + archivo.getName());
-        jLabel4.setText("");
+        jLabel4.setText("Archivo guardado en carpeta 'archivos csv'");
+        javax.swing.JOptionPane.showMessageDialog(this, "Grafo guardado exitosamente en:\n" + archivo.getAbsolutePath(), "Guardado Exitoso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
