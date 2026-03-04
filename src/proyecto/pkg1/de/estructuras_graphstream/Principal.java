@@ -213,25 +213,26 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-/**
- * Metodo funcional para el JFrame que usa la libreria externa Graphstream
- */
+// metodo para visualizar el grafo usando graphstream
     private void VisualizarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarGrafoActionPerformed
+        // se verifica si hay un grafo cargado
         if (grafoActual == null) {
             jLabel4.setText("No hay grafo cargado para visualizar.");
             return;
         }
 
+        // se obtiene el primer nodo para validar que el grafo no este vacio
         Nodo primero = ManejoDeArchivos.obtenerPrimero(grafoActual);
-        //parte de Validacion (si el grafo esta vacio).
         if (primero == null) {
             jLabel4.setText("El grafo está vacío.");
             return;
         }
-        System.setProperty("org.graphstream.ui", "swing"); // esto conecta el motor del graphStream con las ventanas del Jframe.
+        
+        // se configura graphstream para que funcione con swing
+        System.setProperty("org.graphstream.ui", "swing");
         Graph graph = new SingleGraph("Red de proteinas");
 
-        //Parte del diseño
+        // se define el estilo visual de los nodos y arcos
         String desing =
                 "node{"
                 + " fill-color: #3498db;"
@@ -254,25 +255,30 @@ public class Principal extends javax.swing.JFrame {
         graph.setAttribute("layout.force", 0.5);
         graph.setAttribute("layout.quality", 4);
         
-        // construccion del grafo en GraphStream:
+        // se recorren todos los nodos del grafo para crearlos en graphstream
         for (Nodo origen = primero; origen != null; origen = origen.pNext){
             String nombreOrigen = ManejoDeArchivos.nombreNodo(origen);
             
+            // si el nodo no existe en graphstream, se crea
             if(graph.getNode(nombreOrigen) == null){
                 Node n = graph.addNode(nombreOrigen);
                 n.setAttribute("ui.label", nombreOrigen);
             }
+            
+            // se recorren todos los arcos del nodo origen
             Arco arco = origen.lista.ObtenerPrimero();
             while(arco != null){
                 Nodo destino = arco.getDestino();
                 String nombreDestino = ManejoDeArchivos.nombreNodo(destino);
                 double peso = arco.getPeso();
                 
+                // si el nodo destino no existe, se crea
                 if(graph.getNode(nombreDestino) == null){
                     Node n = graph.addNode(nombreDestino);
                     n.setAttribute("ui.label", nombreDestino);
                 }
                 
+                // se crea un id unico para el arco para evitar duplicados
                 String idArco;
                 if (nombreOrigen.compareTo(nombreDestino) < 0){
                     idArco = nombreOrigen + "-" + nombreDestino;
@@ -280,6 +286,7 @@ public class Principal extends javax.swing.JFrame {
                     idArco = nombreDestino + "-" + nombreOrigen;
                 }
                 
+                // si el arco no existe, se crea con su peso
                 if (graph.getEdge(idArco) == null){
                     Edge e = graph.addEdge(idArco, nombreOrigen, nombreDestino, false);
                     e.setAttribute("ui.label", String.valueOf(peso));
@@ -287,46 +294,58 @@ public class Principal extends javax.swing.JFrame {
                 arco = arco.ObtenerpNext();
             }
         }
+        
+        // se muestra el grafo en una nueva ventana
         Viewer viewer = graph.display();
         viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
         jLabel1.setText("Grafo abierto en una nueva ventana de GraphStream");
     }//GEN-LAST:event_VisualizarGrafoActionPerformed
 
+    // metodo para calcular la ruta mas corta entre dos proteinas usando dijkstra
     private void DijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DijkstraActionPerformed
+        // se verifica si hay un grafo cargado
         if (grafoActual == null) {
             jLabel4.setText("Debe cargar un grafo antes de calcular la ruta.");
             return;
         }
 
+        // se pide al usuario el nombre de la proteina de origen
         String origenNombre = JOptionPane.showInputDialog(this, "Nombre de la proteína origen:");
         if (origenNombre == null || origenNombre.trim().isEmpty()) {
             return;
         }
+        
+        // se pide al usuario el nombre de la proteina de destino
         String destinoNombre = JOptionPane.showInputDialog(this, "Nombre de la proteína destino:");
         if (destinoNombre == null || destinoNombre.trim().isEmpty()) {
             return;
         }
 
+        // se buscan los nodos en el grafo
         Nodo origen = buscarNodoPorNombre(grafoActual, origenNombre.trim());
         Nodo destino = buscarNodoPorNombre(grafoActual, destinoNombre.trim());
 
+        // se verifica que ambas proteinas existan
         if (origen == null || destino == null) {
             jLabel4.setText("Alguna de las proteínas no existe en el grafo.");
             return;
         }
 
+        // se calcula la ruta mas corta usando el algoritmo dijkstra
         ListaAuxiliar ruta = grafoActual.Dijkstra(origen, destino);
         if (ruta == null) {
             jLabel4.setText("No se pudo calcular la ruta.");
             return;
         }
 
+        // se convierte la ruta a texto para mostrarla
         String textoRuta = rutaComoTexto(ruta, destino);
         if (textoRuta.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "No existe ruta entre las proteínas seleccionadas.", "Sin Ruta", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
+        // se obtiene la distancia total de la ruta
         double distancia = destino.ObtenerDistanciaMinima();
         String mensaje = "Ruta encontrada:\n" + textoRuta + "\n\nDistancia total: " + distancia;
         javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Ruta Metabólica Calculada", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -334,34 +353,42 @@ public class Principal extends javax.swing.JFrame {
         jLabel4.setText("");
     }//GEN-LAST:event_DijkstraActionPerformed
 
+    // metodo para encontrar la proteina con mas conexiones (hub)
     private void HubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HubsActionPerformed
+        // se verifica si hay un grafo cargado
         if (grafoActual == null) {
             jLabel4.setText("Debe cargar un grafo antes de identificar Hubs.");
             return;
         }
 
+        // se obtiene el primer nodo para validar que el grafo no este vacio
         Nodo primero = obtenerPrimero(grafoActual);
         if (primero == null) {
             jLabel4.setText("El grafo está vacío.");
             return;
         }
 
+        // variables para guardar el nodo con mayor grado (mas conexiones)
         Nodo mejor = null;
         int mejorGrado = -1;
 
+        // se recorren todos los nodos del grafo
         for (Nodo n = primero; n != null; n = n.pNext) {
             int grado = n.ObtenerGrado();
+            // si este nodo tiene mas conexiones que el mejor actual, se actualiza
             if (grado > mejorGrado) {
                 mejorGrado = grado;
                 mejor = n;
             }
         }
 
+        // si no se encontro ningun nodo, se muestra mensaje de error
         if (mejor == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ningún Hub en el grafo.", "Sin Hubs", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
 
+        // se obtiene el nombre del hub encontrado
         String nombre = nombreNodo(mejor);
         String mensaje = "Hub principal encontrado:\n\nProteína: " + nombre + "\nGrado: " + mejorGrado + "\n\nEl grado representa el número de conexiones directas que tiene esta proteína con otras en la red.";
         javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Hub Identificado", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -386,70 +413,83 @@ public class Principal extends javax.swing.JFrame {
         this.dispose(); 
     }//GEN-LAST:event_Salir1ActionPerformed
 
+    // metodo para agregar una nueva proteina al grafo
     private void AgregarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProteinaActionPerformed
+        // se verifica si hay un grafo cargado
         if (grafoActual == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo antes de agregar proteínas.");
             return;
         }
 
+        // se pide al usuario el nombre de la nueva proteina
         String texto = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre de la nueva proteina:", "Agregar Proteina", javax.swing.JOptionPane.QUESTION_MESSAGE);
         if (texto == null || texto.trim().isEmpty()) {
             return;
         }
         texto = texto.trim();
         
+        // se verifica si la proteina ya existe en el grafo
         if(buscarProteinaEnGrafo(texto) != null){
             javax.swing.JOptionPane.showMessageDialog(this, "La proteina " + texto + " ya existe en el grafo.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
-            jTextArea1.append("[-] Fallo al agregar: " + texto + " (ya existe)/n");
+            jTextArea1.append("[-] Fallo al agregar: " + texto + " (ya existe)\n");
         } else{
+            // se añade la nueva proteina al grafo
             grafoActual.AgregarNodo(texto);
-            jTextArea1.append("[+] Agregada: " + texto);
+            jTextArea1.append("[+] Agregada: " + texto + "\n");
             jLabel1.setText("Proteina " + texto + " Agregada con exito");
             jLabel4.setText("");
         }
-        
-
     }//GEN-LAST:event_AgregarProteinaActionPerformed
 
+    // metodo para agregar un arco entre dos nodos con un peso
     private void agregararcobotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregararcobotonActionPerformed
+        // se verifica si hay un grafo cargado
         if (grafoActual == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo antes de agregar arcos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // se pide al usuario el nombre del nodo origen
         String nodoOrigen = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre del nodo origen:", "Agregar Arco", javax.swing.JOptionPane.QUESTION_MESSAGE);
         if (nodoOrigen == null || nodoOrigen.trim().isEmpty()) {
             return;
         }
         nodoOrigen = nodoOrigen.trim();
 
+        // se pide al usuario el nombre del nodo destino
         String nodoDestino = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre del nodo destino:", "Agregar Arco", javax.swing.JOptionPane.QUESTION_MESSAGE);
         if (nodoDestino == null || nodoDestino.trim().isEmpty()) {
             return;
         }
         nodoDestino = nodoDestino.trim();
 
+        // se pide al usuario el peso del arco
         String pesoStr = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el peso del arco:", "Agregar Arco", javax.swing.JOptionPane.QUESTION_MESSAGE);
         if (pesoStr == null || pesoStr.trim().isEmpty()) {
             return;
         }
 
         try {
+            // se convierte el peso a numero
             double peso = Double.parseDouble(pesoStr.trim());
             
+            // se buscan los nodos en el grafo
             Nodo origen = buscarProteinaEnGrafo(nodoOrigen);
             Nodo destino = buscarProteinaEnGrafo(nodoDestino);
             
+            // se verifica que el nodo origen exista
             if (origen == null) {
                 javax.swing.JOptionPane.showMessageDialog(this, "El nodo origen '" + nodoOrigen + "' no existe en el grafo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
+            // se verifica que el nodo destino exista
             if (destino == null) {
                 javax.swing.JOptionPane.showMessageDialog(this, "El nodo destino '" + nodoDestino + "' no existe en el grafo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
+            // se crea el arco entre los dos nodos
             grafoActual.AgregarArco(origen, destino, peso);
             javax.swing.JOptionPane.showMessageDialog(this, "Arco agregado exitosamente:\n" + nodoOrigen + " -> " + nodoDestino + " (peso: " + peso + ")", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             jTextArea1.append("[+] Arco agregado: " + nodoOrigen + " -> " + nodoDestino + " (peso: " + peso + ")\n");
@@ -457,6 +497,7 @@ public class Principal extends javax.swing.JFrame {
             jLabel4.setText("");
             
         } catch (NumberFormatException e) {
+            // si el peso no es un numero valido, se muestra error
             javax.swing.JOptionPane.showMessageDialog(this, "El peso debe ser un número válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_agregararcobotonActionPerformed
