@@ -25,7 +25,7 @@ public class ColaPrioridad {
     public void Encolar(Nodo proteina){
         NodoAuxiliar pNew = new NodoAuxiliar(proteina);
         /*
-        Este es e caso en que la cola este vacia o el nuevo Nodo es el mas liviano
+        Este es el caso en que la cola este vacia o el nuevo Nodo es el mas liviano
         */
         if(esVacia() || proteina.ObtenerDistanciaMinima() < pFirst.proteina.ObtenerDistanciaMinima()){
             pNew.pNextAuxiliar = pFirst;
