@@ -728,23 +728,26 @@ public class Principal extends javax.swing.JFrame {
         String desing =
                 "node{"
                 + " fill-color: #3498db;"
-                + " size: 12px;"
+                + " size: 14px;"
                 + " text-size: 10px;"
                 + " text-color: #2c3e50;"
                 + " text-alignment: at-right;"
-                + " text-offset: 8px, 0px;"
-                + " text-background-mode: plain;"
+                + " text-offset: 10px, 0px;"
+                + " text-background-mode: rounded-box;"
                 + " text-background-color: rgba(255, 255, 255, 200);"
                 + " text-padding: 3px;"
                 + "}"
                 + "edge{"
                 + " fill-color: #bdc3c7;"
                 + " text-size: 8px;"
+                + " text-background-mode: rounded-box;"
+                + " text-background-color: white;"
                 + " text-color: #7f8c8d;"
                 + "}";
         graph.setAttribute("ui.stylesheet", desing);
         graph.setAttribute("ui.antialias");
-        graph.setAttribute("layout.force", 1.5);
+        graph.setAttribute("layout.force", 0.4);
+        graph.setAttribute("layout.spring-length", 120);
         graph.setAttribute("layout.quality", 4);
         
         // se recorren todos los nodos del grafo para crearlos en graphstream
@@ -792,12 +795,24 @@ public class Principal extends javax.swing.JFrame {
        viewer.enableAutoLayout();
        
        org.graphstream.ui.swing_viewer.ViewPanel viewPanel = (org.graphstream.ui.swing_viewer.ViewPanel) viewer.addDefaultView(false);
+       // Zoom con rueda del raton
+       viewPanel.addMouseWheelListener(new java.awt.event.MouseWheelListener(){
+           @Override
+           public void mouseWheelMoved(java.awt.event.MouseWheelEvent e){
+               double viewPercent = viewPanel.getCamera().getViewPercent();
+               if(e.getWheelRotation() < 0){
+                   viewPanel.getCamera().setViewPercent(viewPercent * 0.9);
+               } else{
+                   viewPanel.getCamera().setViewPercent(viewPercent * 1.1);
+               }
+           }
+       });
        // Actualizacion del contenedor visual en la interfaz.
        jPanel1.removeAll();
        jPanel1.setLayout(new java.awt.BorderLayout());
        jPanel1.add(viewPanel, java.awt.BorderLayout.CENTER);
        jPanel1.revalidate();
-       jPanel1.repaint();
+       jPanel1.repaint();  
     }
     
 
