@@ -62,7 +62,8 @@ public class Principal extends javax.swing.JFrame {
         ModificarGrafo = new javax.swing.JButton();
         Salir1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        agregararcoboton = new javax.swing.JButton();
+        DeteccionComp = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
 
         AgregarProteina.setText("Agregar Proteina");
         AgregarProteina.addActionListener(this::AgregarProteinaActionPerformed);
@@ -89,9 +90,8 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(CambiarGrafoLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(AgregarProteina)
-                            .addComponent(agregararcoboton)
-                            .addComponent(EliminarProteina))
+                            .addComponent(EliminarProteina)
+                            .addComponent(AgregarProteina))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(CambiarGrafoLayout.createSequentialGroup()
@@ -111,8 +111,6 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(CambiarGrafoLayout.createSequentialGroup()
                         .addComponent(AgregarProteina)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(agregararcoboton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(EliminarProteina))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
                 .addGap(15, 15, 15)
@@ -124,92 +122,65 @@ public class Principal extends javax.swing.JFrame {
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAutoRequestFocus(false);
+        setMaximumSize(new java.awt.Dimension(610, 309));
+        setPreferredSize(new java.awt.Dimension(1000, 309));
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Caracteristicas del programa:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         CargarRedDeProteinas.setText("Cargar Red De Proteinas");
         CargarRedDeProteinas.addActionListener(this::CargarRedDeProteinasActionPerformed);
+        getContentPane().add(CargarRedDeProteinas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 200, 20));
 
         Dijkstra.setText("Calcular Ruta Metabolica");
         Dijkstra.addActionListener(this::DijkstraActionPerformed);
+        getContentPane().add(Dijkstra, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 230, 20));
 
         Hubs.setText("Indentificar Hubs");
+        Hubs.setMaximumSize(new java.awt.Dimension(211, 23));
         Hubs.addActionListener(this::HubsActionPerformed);
+        getContentPane().add(Hubs, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 200, 20));
 
         VisualizarGrafo.setText("Visualizar Grafo");
         VisualizarGrafo.addActionListener(this::VisualizarGrafoActionPerformed);
+        getContentPane().add(VisualizarGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 170, 20));
 
         Guardar.setText("Guardar Cambios");
         Guardar.addActionListener(this::GuardarActionPerformed);
+        getContentPane().add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 40, 250, 40));
 
         ModificarGrafo.setText("Modificar Grafo");
         ModificarGrafo.addActionListener(this::ModificarGrafoActionPerformed);
+        getContentPane().add(ModificarGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 170, 20));
 
         Salir1.setText("Salir");
         Salir1.addActionListener(this::Salir1ActionPerformed);
+        getContentPane().add(Salir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, 100, 40));
 
         jLabel4.setText("Status");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 293, 172, -1));
 
-        agregararcoboton.setText("Agregar Arco");
-        agregararcoboton.addActionListener(this::agregararcobotonActionPerformed);
+        DeteccionComp.setText("Deteccion de Complejos proteicos");
+        DeteccionComp.addActionListener(this::DeteccionCompActionPerformed);
+        getContentPane().add(DeteccionComp, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 230, 20));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(122, 122, 122)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(Salir1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(ModificarGrafo)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(VisualizarGrafo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CargarRedDeProteinas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Hubs, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Dijkstra))
-                .addGap(37, 37, 37))
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 980, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addComponent(jLabel1)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CargarRedDeProteinas)
-                    .addComponent(Dijkstra))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Hubs)
-                    .addComponent(VisualizarGrafo))
-                .addGap(18, 18, 18)
-                .addComponent(ModificarGrafo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Guardar)
-                .addGap(18, 18, 18)
-                .addComponent(Salir1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addContainerGap())
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 980, 170));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -639,6 +610,57 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void DeteccionCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeteccionCompActionPerformed
+        // TODO add your handling code here:
+        if (grafoActual == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo primero.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        grafoActual.ReiniciarVisitados();
+
+        StringBuilder reporte = new StringBuilder("DETECCIÓN DE COMPLEJOS PROTEICOS\n");
+
+        int cantidadComplejos = 0;
+        int proteinasTotales = 0;
+
+        Nodo nodoIterador = ManejoDeArchivos.obtenerPrimero(grafoActual);
+
+        while (nodoIterador != null) {
+            if (!nodoIterador.esVisitado()) {
+                cantidadComplejos++;
+
+                ListaAuxiliar complejo = grafoActual.DFS(nodoIterador);
+
+                reporte.append("Complejo #").append(cantidadComplejos).append(":\n > ");
+
+                NodoAuxiliar aux = complejo.pFirst;
+                while (aux != null) {
+                    proteinasTotales++;
+
+                    String nombre = ManejoDeArchivos.nombreNodo(aux.proteina);
+                    reporte.append("[").append(nombre).append("]");
+
+                    if (aux.pNextAuxiliar != null) {
+                        reporte.append(" -> ");
+                    }
+
+                    aux.proteina.AgregarVisitado(true);
+                    aux = aux.pNextAuxiliar;
+                }
+                reporte.append("\n\n");
+            }
+            nodoIterador = nodoIterador.pNext;
+        }
+
+        reporte.append("Total de complejos: ").append(cantidadComplejos).append("\n");
+        reporte.append("Total de proteínas analizadas: ").append(proteinasTotales);
+
+        javax.swing.JOptionPane.showMessageDialog(this, reporte.toString(), "Análisis de Componentes Conexos", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        jLabel1.setText("Complejos: " + cantidadComplejos);
+        jTextArea1.append("[Análisis] Se detectaron " + cantidadComplejos + " grupos independientes.\n");
+    }//GEN-LAST:event_DeteccionCompActionPerformed
+
     // --- Métodos auxiliares privados ---
 
     private Nodo obtenerPrimero(Grafo grafo) {
@@ -731,7 +753,7 @@ public class Principal extends javax.swing.JFrame {
         }
         return null;
     }
-
+    
 
     /**
      * @param args the command line arguments
@@ -762,6 +784,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton AgregarProteina;
     private javax.swing.JDialog CambiarGrafo;
     private javax.swing.JButton CargarRedDeProteinas;
+    private javax.swing.JButton DeteccionComp;
     private javax.swing.JButton Dijkstra;
     private javax.swing.JButton EliminarProteina;
     private javax.swing.JButton Guardar;
@@ -770,11 +793,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton Salir1;
     private javax.swing.JButton Salir2;
     private javax.swing.JButton VisualizarGrafo;
-    private javax.swing.JButton agregararcoboton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
