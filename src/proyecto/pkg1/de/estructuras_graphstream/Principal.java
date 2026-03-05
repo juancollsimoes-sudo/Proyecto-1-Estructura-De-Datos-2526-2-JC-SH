@@ -158,7 +158,7 @@ public class Principal extends javax.swing.JFrame {
 
         Salir1.setText("Salir");
         Salir1.addActionListener(this::Salir1ActionPerformed);
-        getContentPane().add(Salir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, 100, 40));
+        getContentPane().add(Salir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, 130, 40));
 
         jLabel4.setText("Status");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 293, 172, -1));
@@ -266,10 +266,25 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         
-        // se muestra el grafo en una nueva ventana
-        Viewer viewer = graph.display();
-        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
-        jLabel1.setText("Grafo abierto en una nueva ventana de GraphStream");
+    
+       org.graphstream.ui.view.Viewer viewer = new org.graphstream.ui.swing_viewer.SwingViewer(graph, org.graphstream.ui.view.Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+       viewer.enableAutoLayout();
+       
+       org.graphstream.ui.swing_viewer.ViewPanel viewPanel = (org.graphstream.ui.swing_viewer.ViewPanel) viewer.addDefaultView(false);
+       // Configuracion del contenedor en la interfaz Swing
+       if (jPanel1 != null) {
+           jPanel1.removeAll();
+           jPanel1.setLayout(new java.awt.BorderLayout());
+           jPanel1.add(viewPanel, java.awt.BorderLayout.CENTER);
+
+           jPanel1.revalidate();
+           jPanel1.repaint();
+           jLabel1.setText("Grafo visualizado en el panel principal.");
+       } else {
+           
+           graph.display(); 
+           jLabel2.setText("Error: panelGrafo no encontrado. Abriendo ventana externa.");
+       }
     }//GEN-LAST:event_VisualizarGrafoActionPerformed
 
     // metodo para calcular la ruta mas corta entre dos proteinas usando dijkstra
