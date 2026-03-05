@@ -63,7 +63,7 @@ public class Grafo {
      * Reinicia el estado de visitado de todos los nodos.
      * Necesario antes de ejecutar el DFS
      */
-    private void ReiniciarVisitados(){
+    public void ReiniciarVisitados(){
         Nodo pActual = pFirst;
         while(pActual != null){
             pActual.AgregarVisitado(false);

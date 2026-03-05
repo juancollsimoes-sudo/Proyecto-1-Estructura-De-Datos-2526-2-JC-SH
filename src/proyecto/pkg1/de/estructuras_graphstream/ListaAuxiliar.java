@@ -10,7 +10,7 @@ package proyecto.pkg1.de.estructuras_graphstream;
  * Esta Clase es necesaria para guardar los cambios del DFS
  */
 public class ListaAuxiliar {
-    private NodoAuxiliar pFirst;
+    public NodoAuxiliar pFirst;
 
     public ListaAuxiliar() {
         this.pFirst = null;
