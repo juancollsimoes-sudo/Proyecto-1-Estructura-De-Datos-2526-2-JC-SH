@@ -198,105 +198,7 @@ public class Principal extends javax.swing.JFrame {
     * metodo para visualizar el grafo usando graphstream
     */
     private void VisualizarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarGrafoActionPerformed
-        // se verifica si hay un grafo cargado
-        if (grafoActual == null) {
-            jLabel4.setText("No hay grafo cargado para visualizar.");
-            return;
-        }
-
-        // se obtiene el primer nodo para validar que el grafo no este vacio
-        Nodo primero = ManejoDeArchivos.obtenerPrimero(grafoActual);
-        if (primero == null) {
-            jLabel4.setText("El grafo está vacío.");
-            return;
-        }
-        
-        // se configura graphstream para que funcione con swing
-        System.setProperty("org.graphstream.ui", "swing");
-        Graph graph = new SingleGraph("Red de proteinas");
-
-        // se define el estilo visual de los nodos y arcos
-        String desing =
-                "node{"
-                + " fill-color: #3498db;"
-                + " size: 12px;"
-                + " text-size: 10px;"
-                + " text-color: #2c3e50;"
-                + " text-alignment: at-right;"
-                + " text-offset: 8px, 0px;"
-                + " text-background-mode: plain;"
-                + " text-background-color: rgba(255, 255, 255, 200);"
-                + " text-padding: 3px;"
-                + "}"
-                + "edge{"
-                + " fill-color: #bdc3c7;"
-                + " text-size: 11px;"
-                + " text-color: #7f8c8d;"
-                + "}";
-        graph.setAttribute("ui.stylesheet", desing);
-        graph.setAttribute("ui.antialias");
-        graph.setAttribute("layout.force", 1.5);
-        graph.setAttribute("layout.quality", 4);
-        
-        // se recorren todos los nodos del grafo para crearlos en graphstream
-        for (Nodo origen = primero; origen != null; origen = origen.pNext){
-            String nombreOrigen = ManejoDeArchivos.nombreNodo(origen);
-            
-            // si el nodo no existe en graphstream, se crea
-            if(graph.getNode(nombreOrigen) == null){
-                Node n = graph.addNode(nombreOrigen);
-                n.setAttribute("ui.label", nombreOrigen);
-            }
-            
-            // se recorren todos los arcos del nodo origen
-            Arco arco = origen.lista.ObtenerPrimero();
-            while(arco != null){
-                Nodo destino = arco.getDestino();
-                String nombreDestino = ManejoDeArchivos.nombreNodo(destino);
-                double peso = arco.getPeso();
-                
-                // si el nodo destino no existe, se crea
-                if(graph.getNode(nombreDestino) == null){
-                    Node n = graph.addNode(nombreDestino);
-                    n.setAttribute("ui.label", nombreDestino);
-                }
-                
-                // se crea un id unico para el arco para evitar duplicados
-                String idArco;
-                if (nombreOrigen.compareTo(nombreDestino) < 0){
-                    idArco = nombreOrigen + "-" + nombreDestino;
-                } else{
-                    idArco = nombreDestino + "-" + nombreOrigen;
-                }
-                
-                // si el arco no existe, se crea con su peso
-                if (graph.getEdge(idArco) == null){
-                    Edge e = graph.addEdge(idArco, nombreOrigen, nombreDestino, false);
-                    e.setAttribute("ui.label", String.valueOf(peso));
-                }
-                arco = arco.ObtenerpNext();
-            }
-        }
-        
-    
-       org.graphstream.ui.view.Viewer viewer = new org.graphstream.ui.swing_viewer.SwingViewer(graph, org.graphstream.ui.view.Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
-       viewer.enableAutoLayout();
-       
-       org.graphstream.ui.swing_viewer.ViewPanel viewPanel = (org.graphstream.ui.swing_viewer.ViewPanel) viewer.addDefaultView(false);
-       // Configuracion del contenedor en la interfaz Swing
-       if (jPanel1 != null) {
-           jPanel1.removeAll();
-           jPanel1.setLayout(new java.awt.BorderLayout());
-           jPanel1.add(viewPanel, java.awt.BorderLayout.CENTER);
-
-           jPanel1.revalidate();
-           jPanel1.repaint();
-           jLabel1.setText("Grafo visualizado en el panel principal.");
-       } else {
-           
-           graph.display(); 
-           jLabel2.setText("Error: panelGrafo no encontrado. Abriendo ventana externa.");
-       }
+        RefrescarGrafo();
     }//GEN-LAST:event_VisualizarGrafoActionPerformed
 
     /**
@@ -397,7 +299,10 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setText("Hub identificado: " + nombre);
         jLabel4.setText("");
     }//GEN-LAST:event_HubsActionPerformed
-
+/**
+ * Metodo para configurar el boton del jDialog
+ * @param evt 
+ */
     private void ModificarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarGrafoActionPerformed
         if (grafoActual == null) {
             jLabel4.setText("Debe cargar un grafo antes de modificarlo.");
@@ -419,7 +324,7 @@ public class Principal extends javax.swing.JFrame {
      * metodo para agregar una nueva proteina al grafo
      */
     private void AgregarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProteinaActionPerformed
-        // se verifica si hay un grafo cargado
+
         if (grafoActual == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo antes de agregar proteínas.");
             return;
@@ -442,6 +347,8 @@ public class Principal extends javax.swing.JFrame {
             jTextArea1.append("[+] Agregada: " + texto + "\n");
             jLabel1.setText("Proteina " + texto + " Agregada con exito");
             jLabel4.setText("");
+            RefrescarGrafo();
+            
         }
     }//GEN-LAST:event_AgregarProteinaActionPerformed
 
@@ -449,12 +356,11 @@ public class Principal extends javax.swing.JFrame {
      * metodo para agregar un arco entre dos nodos con un peso
      */
     private void AgregarArcoBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarArcoBotonActionPerformed
-        // se verifica si hay un grafo cargado
+
         if (grafoActual == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo antes de agregar arcos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         // se pide al usuario el nombre del nodo origen
         String nodoOrigen = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre del nodo origen:", "Agregar Arco", javax.swing.JOptionPane.QUESTION_MESSAGE);
         if (nodoOrigen == null || nodoOrigen.trim().isEmpty()) {
@@ -501,6 +407,7 @@ public class Principal extends javax.swing.JFrame {
             jTextArea1.append("[+] Arco agregado: " + nodoOrigen + " -> " + nodoDestino + " (peso: " + peso + ")\n");
             jLabel1.setText("Arco agregado: " + nodoOrigen + " -> " + nodoDestino);
             jLabel4.setText("");
+            RefrescarGrafo();
             
         } catch (NumberFormatException e) {
             // si el peso no es un numero valido, se muestra error
@@ -578,6 +485,7 @@ public class Principal extends javax.swing.JFrame {
         jTextArea1.append("[-] Eliminada: " + nombreProteina + "\n");
         jLabel1.setText("Proteína eliminada: " + nombreProteina);
         jLabel4.setText("");
+        RefrescarGrafo();
     }//GEN-LAST:event_EliminarProteinaActionPerformed
 
     private void Salir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir2ActionPerformed
@@ -795,6 +703,101 @@ public class Principal extends javax.swing.JFrame {
             actual = actual.pNext;
         }
         return null;
+    }
+    /**
+     * Metodo para que, al aplicarlo, se actualice de manera automatica el grafo. (tambien configura todo del mismo).
+     */
+    private void RefrescarGrafo(){
+        if (grafoActual == null) {
+            jLabel4.setText("No hay grafo cargado para visualizar.");
+            return;
+        }
+
+        // se obtiene el primer nodo para validar que el grafo no este vacio
+        Nodo primero = ManejoDeArchivos.obtenerPrimero(grafoActual);
+        if (primero == null) {
+            jLabel4.setText("El grafo está vacío.");
+            return;
+        }
+        
+        // se configura graphstream para que funcione con swing
+        System.setProperty("org.graphstream.ui", "swing");
+        Graph graph = new SingleGraph("Red de proteinas");
+
+        // se define el estilo visual de los nodos y arcos
+        String desing =
+                "node{"
+                + " fill-color: #3498db;"
+                + " size: 12px;"
+                + " text-size: 10px;"
+                + " text-color: #2c3e50;"
+                + " text-alignment: at-right;"
+                + " text-offset: 8px, 0px;"
+                + " text-background-mode: plain;"
+                + " text-background-color: rgba(255, 255, 255, 200);"
+                + " text-padding: 3px;"
+                + "}"
+                + "edge{"
+                + " fill-color: #bdc3c7;"
+                + " text-size: 8px;"
+                + " text-color: #7f8c8d;"
+                + "}";
+        graph.setAttribute("ui.stylesheet", desing);
+        graph.setAttribute("ui.antialias");
+        graph.setAttribute("layout.force", 1.5);
+        graph.setAttribute("layout.quality", 4);
+        
+        // se recorren todos los nodos del grafo para crearlos en graphstream
+        for (Nodo origen = primero; origen != null; origen = origen.pNext){
+            String nombreOrigen = ManejoDeArchivos.nombreNodo(origen);
+            
+            // si el nodo no existe en graphstream, se crea
+            if(graph.getNode(nombreOrigen) == null){
+                Node n = graph.addNode(nombreOrigen);
+                n.setAttribute("ui.label", nombreOrigen);
+            }
+            
+            // se recorren todos los arcos del nodo origen
+            Arco arco = origen.lista.ObtenerPrimero();
+            while(arco != null){
+                Nodo destino = arco.getDestino();
+                String nombreDestino = ManejoDeArchivos.nombreNodo(destino);
+                double peso = arco.getPeso();
+                
+                // si el nodo destino no existe, se crea
+                if(graph.getNode(nombreDestino) == null){
+                    Node n = graph.addNode(nombreDestino);
+                    n.setAttribute("ui.label", nombreDestino);
+                }
+                
+                // se crea un id unico para el arco para evitar duplicados
+                String idArco;
+                if (nombreOrigen.compareTo(nombreDestino) < 0){
+                    idArco = nombreOrigen + "-" + nombreDestino;
+                } else{
+                    idArco = nombreDestino + "-" + nombreOrigen;
+                }
+                
+                // si el arco no existe, se crea con su peso
+                if (graph.getEdge(idArco) == null){
+                    Edge e = graph.addEdge(idArco, nombreOrigen, nombreDestino, false);
+                    e.setAttribute("ui.label", String.valueOf(peso));
+                }
+                arco = arco.ObtenerpNext();
+            }
+        }
+        
+    
+       org.graphstream.ui.view.Viewer viewer = new org.graphstream.ui.swing_viewer.SwingViewer(graph, org.graphstream.ui.view.Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+       viewer.enableAutoLayout();
+       
+       org.graphstream.ui.swing_viewer.ViewPanel viewPanel = (org.graphstream.ui.swing_viewer.ViewPanel) viewer.addDefaultView(false);
+       // Actualizacion del contenedor visual en la interfaz.
+       jPanel1.removeAll();
+       jPanel1.setLayout(new java.awt.BorderLayout());
+       jPanel1.add(viewPanel, java.awt.BorderLayout.CENTER);
+       jPanel1.revalidate();
+       jPanel1.repaint();
     }
     
 
