@@ -32,8 +32,9 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         grafoActual = null;
         rutaGrafoActual = null;
-        this.setResizable(true);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.setSize(1050, 420);
     }
 
     /**
@@ -52,6 +53,7 @@ public class Principal extends javax.swing.JFrame {
         Salir2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        AgregarArcoBoton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         CargarRedDeProteinas = new javax.swing.JButton();
@@ -81,6 +83,9 @@ public class Principal extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        AgregarArcoBoton.setText("Agregar Arco");
+        AgregarArcoBoton.addActionListener(this::AgregarArcoBotonActionPerformed);
+
         javax.swing.GroupLayout CambiarGrafoLayout = new javax.swing.GroupLayout(CambiarGrafo.getContentPane());
         CambiarGrafo.getContentPane().setLayout(CambiarGrafoLayout);
         CambiarGrafoLayout.setHorizontalGroup(
@@ -91,7 +96,9 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(EliminarProteina)
-                            .addComponent(AgregarProteina))
+                            .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(AgregarArcoBoton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(AgregarProteina, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(CambiarGrafoLayout.createSequentialGroup()
@@ -110,6 +117,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CambiarGrafoLayout.createSequentialGroup()
                         .addComponent(AgregarProteina)
+                        .addGap(47, 47, 47)
+                        .addComponent(AgregarArcoBoton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(EliminarProteina))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
@@ -123,8 +132,9 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
-        setMaximumSize(new java.awt.Dimension(610, 309));
-        setPreferredSize(new java.awt.Dimension(1000, 309));
+        setMaximumSize(new java.awt.Dimension(1000, 390));
+        setMinimumSize(new java.awt.Dimension(1000, 390));
+        setPreferredSize(new java.awt.Dimension(1000, 390));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -161,7 +171,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().add(Salir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, 130, 40));
 
         jLabel4.setText("Status");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 293, 172, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 172, -1));
 
         DeteccionComp.setText("Deteccion de Complejos proteicos");
         DeteccionComp.addActionListener(this::DeteccionCompActionPerformed);
@@ -177,10 +187,10 @@ public class Principal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 170, Short.MAX_VALUE)
+            .addGap(0, 250, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 980, 170));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 980, 250));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -209,8 +219,8 @@ public class Principal extends javax.swing.JFrame {
         String desing =
                 "node{"
                 + " fill-color: #3498db;"
-                + " size: 25px;"
-                + " text-size: 14px;"
+                + " size: 12px;"
+                + " text-size: 10px;"
                 + " text-color: #2c3e50;"
                 + " text-alignment: at-right;"
                 + " text-offset: 8px, 0px;"
@@ -225,7 +235,7 @@ public class Principal extends javax.swing.JFrame {
                 + "}";
         graph.setAttribute("ui.stylesheet", desing);
         graph.setAttribute("ui.antialias");
-        graph.setAttribute("layout.force", 0.5);
+        graph.setAttribute("layout.force", 1.5);
         graph.setAttribute("layout.quality", 4);
         
         // se recorren todos los nodos del grafo para crearlos en graphstream
@@ -438,7 +448,7 @@ public class Principal extends javax.swing.JFrame {
     /**
      * metodo para agregar un arco entre dos nodos con un peso
      */
-    private void agregararcobotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregararcobotonActionPerformed
+    private void AgregarArcoBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarArcoBotonActionPerformed
         // se verifica si hay un grafo cargado
         if (grafoActual == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo antes de agregar arcos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -496,7 +506,7 @@ public class Principal extends javax.swing.JFrame {
             // si el peso no es un numero valido, se muestra error
             javax.swing.JOptionPane.showMessageDialog(this, "El peso debe ser un número válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_agregararcobotonActionPerformed
+    }//GEN-LAST:event_AgregarArcoBotonActionPerformed
     /**
      * Metodo para el boton eliminar proteina.
      */
@@ -814,6 +824,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AgregarArcoBoton;
     private javax.swing.JButton AgregarProteina;
     private javax.swing.JDialog CambiarGrafo;
     private javax.swing.JButton CargarRedDeProteinas;
