@@ -184,7 +184,9 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-// metodo para visualizar el grafo usando graphstream
+    /**
+    * metodo para visualizar el grafo usando graphstream
+    */
     private void VisualizarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarGrafoActionPerformed
         // se verifica si hay un grafo cargado
         if (grafoActual == null) {
@@ -287,7 +289,9 @@ public class Principal extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_VisualizarGrafoActionPerformed
 
-    // metodo para calcular la ruta mas corta entre dos proteinas usando dijkstra
+    /**
+     * metodo para calcular la ruta mas corta entre dos proteinas usando dijkstra
+     */
     private void DijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DijkstraActionPerformed
         // se verifica si hay un grafo cargado
         if (grafoActual == null) {
@@ -339,7 +343,9 @@ public class Principal extends javax.swing.JFrame {
         jLabel4.setText("");
     }//GEN-LAST:event_DijkstraActionPerformed
 
-    // metodo para encontrar la proteina con mas conexiones (hub)
+    /**
+     *  metodo para encontrar la proteina con mas conexiones (hub)
+     */
     private void HubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HubsActionPerformed
         // se verifica si hay un grafo cargado
         if (grafoActual == null) {
@@ -399,7 +405,9 @@ public class Principal extends javax.swing.JFrame {
         this.dispose(); 
     }//GEN-LAST:event_Salir1ActionPerformed
 
-    // metodo para agregar una nueva proteina al grafo
+    /**
+     * metodo para agregar una nueva proteina al grafo
+     */
     private void AgregarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProteinaActionPerformed
         // se verifica si hay un grafo cargado
         if (grafoActual == null) {
@@ -427,7 +435,9 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AgregarProteinaActionPerformed
 
-    // metodo para agregar un arco entre dos nodos con un peso
+    /**
+     * metodo para agregar un arco entre dos nodos con un peso
+     */
     private void agregararcobotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregararcobotonActionPerformed
         // se verifica si hay un grafo cargado
         if (grafoActual == null) {
@@ -487,7 +497,9 @@ public class Principal extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "El peso debe ser un número válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_agregararcobotonActionPerformed
-
+    /**
+     * Metodo para el boton eliminar proteina.
+     */
     private void EliminarProteinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarProteinaActionPerformed
         if (grafoActual == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Debe cargar un grafo antes de eliminar proteínas.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -561,7 +573,9 @@ public class Principal extends javax.swing.JFrame {
     private void Salir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir2ActionPerformed
         CambiarGrafo.setVisible(false);
     }//GEN-LAST:event_Salir2ActionPerformed
-
+    /**
+     * Metodo que enlaza la clase ManejoDeArchivos para su uso en Principal 
+     */
     private void CargarRedDeProteinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarRedDeProteinasActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
@@ -592,7 +606,9 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_CargarRedDeProteinasActionPerformed
 
-    // metodo para guardar los cambios del grafo en un archivo csv
+    /**
+     * metodo para guardar los cambios del grafo en un archivo csv
+     */
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         // se verifica si hay un grafo para guardar
         if (grafoActual == null) {
@@ -624,7 +640,9 @@ public class Principal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    /**
+     * Metodo que usa DFS para la deteccion de complejos proteicos.
+     */
     private void DeteccionCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeteccionCompActionPerformed
         // TODO add your handling code here:
         if (grafoActual == null) {
