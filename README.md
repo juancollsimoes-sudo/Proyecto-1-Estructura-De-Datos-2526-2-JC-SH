@@ -10,7 +10,7 @@ Este programa fue realizado con las siguientes especificaiones:
 - Apache Netbeans IDE (29)
 - JDK (25)
 - UTF-8
-Cabe destacar que el programa tambien corre en versiones anteriores de Netbeans y con JDKs mas antiguos que el 25.
+Cabe destacar que el programa tambien corre en versiones anteriores de Netbeans y con JDKs mas antiguos que el 25. ( si le sucede este error, de click derecho al proyecto->Properties->Source/Binary format ahi podra cambiar la version del JDK
 
 ## Repositorio del Proyecto:
 
