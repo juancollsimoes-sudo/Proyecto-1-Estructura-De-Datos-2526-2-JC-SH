@@ -21,7 +21,7 @@ Puedes encontrar el desarrollo completo, el historial de commits y el código fu
 ## Miembros del equipo: 
 
 1. Juan Coll
-2. Santiago Hernandez
+2. Santiago Hernández
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
