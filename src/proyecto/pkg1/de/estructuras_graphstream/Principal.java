@@ -440,6 +440,18 @@ public class Principal extends javax.swing.JFrame {
             // se convierte el peso a numero
             double peso = Double.parseDouble(pesoStr.trim());
             
+            // Validación: impedir números menores que cero o decimales
+            if (peso < 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No puede ingresar un número menor que cero.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Verificar si es decimal (tiene parte fraccionaria)
+            if (peso % 1 != 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No puede ingresar un número decimal.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
             // se buscan los nodos en el grafo
             Nodo origen = buscarProteinaEnGrafo(nodoOrigen);
             Nodo destino = buscarProteinaEnGrafo(nodoDestino);
