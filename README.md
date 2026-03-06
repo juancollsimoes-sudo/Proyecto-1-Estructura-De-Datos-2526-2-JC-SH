@@ -2,10 +2,10 @@
 
 Este proyecto consiste en una aplicación de escritorio desarrollada en Java que permite cargar, visualizar y analizar redes de proteínas mediante el uso de grafos. La herramienta facilita la identificación de proteínas clave (Hubs) y el cálculo de rutas óptimas de interacción utilizando algoritmos de teoría de grafos como Dijkstra y DFS
 
-# INSTRUCCIONES PARA CORRER:
+# Instrucciones para correr:
 Una vez abierto el programa el usuario primero deberá cargar un archivo .csv donde estén almacenadas las proteínas, una vez hecho esto el usuario podrá modificar el grafo, visualizarlo, calcular la ruta más corta entre 2 proteínas, añadir arcos entre dos proteínas, detectar el hub e incluso detectar complejos proteicos. Si el usuario no ha cargado previamente el archivo .csv el programa le indicará que haga esto primero. una vez todos los cambios han sido hechos el usuario tendra la opcion de guardar el archivo .csv modificado en una carpeta local facilitada por el mismo programa, una vez hecho esto se guardará localmente el archivo y el usuario podrá cerrar el programa.
 
-# ESPECIFICACIONES DE LA CREACION DEL PROGRAMA:
+# Especificaciones de la creacion del programa:
 Este programa fue realizado con las siguientes especificaiones:
 - Apache Netbeans IDE (29)
 - JDK (25)
