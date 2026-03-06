@@ -33,8 +33,66 @@ public class Principal extends javax.swing.JFrame {
         grafoActual = null;
         rutaGrafoActual = null;
         this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setSize(1050, 420);
+        /**
+         * Parte de diseño:
+         */
+        // jFrame
+            this.setLocationRelativeTo(null);
+            this.setSize(1050, 420);
+            this.getContentPane().setBackground(java.awt.Color.WHITE);
+        // Cargar ed de proteinas boton
+            CargarRedDeProteinas.setBackground(new java.awt.Color(128, 128, 128)); 
+            CargarRedDeProteinas.setOpaque(true);
+            CargarRedDeProteinas.setBorderPainted(false); 
+        // Dijkstra boton
+            Dijkstra.setBackground(new java.awt.Color(128, 128, 128)); 
+            Dijkstra.setOpaque(true);
+            Dijkstra.setBorderPainted(false); 
+        // Hubs boton
+            Hubs.setBackground(new java.awt.Color(128, 128, 128)); 
+            Hubs.setOpaque(true);
+            Hubs.setBorderPainted(false); 
+        // Visualizar grafo boton
+            VisualizarGrafo.setBackground(new java.awt.Color(128, 128, 128)); 
+            VisualizarGrafo.setOpaque(true);
+            VisualizarGrafo.setBorderPainted(false); 
+        // Guardar boton
+            Guardar.setBackground(new java.awt.Color(128, 128, 128)); 
+            Guardar.setOpaque(true);
+            Guardar.setBorderPainted(false); 
+        // Modificar Grafo boton
+            ModificarGrafo.setBackground(new java.awt.Color(128, 128, 128)); 
+            ModificarGrafo.setOpaque(true);
+            ModificarGrafo.setBorderPainted(false); 
+        // Salir1 boton
+            Salir1.setBackground(new java.awt.Color(128, 128, 128)); 
+            Salir1.setOpaque(true);
+            Salir1.setBorderPainted(false); 
+        // DeteccionComp boton
+            DeteccionComp.setBackground(new java.awt.Color(128, 128, 128)); 
+            DeteccionComp.setOpaque(true);
+            DeteccionComp.setBorderPainted(false); 
+            // CambiarGrafo 
+                CambiarGrafo.setLocationRelativeTo(null);
+                CambiarGrafo.setSize(1050, 420);
+                CambiarGrafo.getContentPane().setBackground(java.awt.Color.WHITE);
+            // AgregarProteina boton
+                AgregarProteina.setBackground(new java.awt.Color(128, 128, 128)); 
+                AgregarProteina.setOpaque(true);
+                AgregarProteina.setBorderPainted(false); 
+            //AgregarArcoBoton boton
+                AgregarArcoBoton.setBackground(new java.awt.Color(128, 128, 128)); 
+                AgregarArcoBoton.setOpaque(true);
+                AgregarArcoBoton.setBorderPainted(false); 
+            //EliminarProteina boton
+                EliminarProteina.setBackground(new java.awt.Color(128, 128, 128)); 
+                EliminarProteina.setOpaque(true);
+                EliminarProteina.setBorderPainted(false); 
+            // Salir2 boton
+                Salir2.setBackground(new java.awt.Color(128, 128, 128)); 
+                Salir2.setOpaque(true);
+                Salir2.setBorderPainted(false); 
+        
     }
 
     /**
@@ -66,74 +124,50 @@ public class Principal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         DeteccionComp = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+
+        CambiarGrafo.setMaximumSize(new java.awt.Dimension(520, 400));
+        CambiarGrafo.setMinimumSize(new java.awt.Dimension(520, 400));
+        CambiarGrafo.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         AgregarProteina.setText("Agregar Proteina");
         AgregarProteina.addActionListener(this::AgregarProteinaActionPerformed);
+        CambiarGrafo.getContentPane().add(AgregarProteina, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 130, 60));
 
-        jLabel2.setText("Modificar Grafo");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setText("Modificar Grafo:");
+        CambiarGrafo.getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, 300, 40));
 
         EliminarProteina.setText("Eliminar Proteina");
         EliminarProteina.addActionListener(this::EliminarProteinaActionPerformed);
+        CambiarGrafo.getContentPane().add(EliminarProteina, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 130, 64));
 
         Salir2.setText("Salir");
         Salir2.setAlignmentY(0.8F);
         Salir2.addActionListener(this::Salir2ActionPerformed);
+        CambiarGrafo.getContentPane().add(Salir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 130, 50));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        CambiarGrafo.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 310, 260));
+
         AgregarArcoBoton.setText("Agregar Arco");
         AgregarArcoBoton.addActionListener(this::AgregarArcoBotonActionPerformed);
-
-        javax.swing.GroupLayout CambiarGrafoLayout = new javax.swing.GroupLayout(CambiarGrafo.getContentPane());
-        CambiarGrafo.getContentPane().setLayout(CambiarGrafoLayout);
-        CambiarGrafoLayout.setHorizontalGroup(
-            CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CambiarGrafoLayout.createSequentialGroup()
-                .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CambiarGrafoLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(EliminarProteina)
-                            .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(AgregarArcoBoton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(AgregarProteina, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(CambiarGrafoLayout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Salir2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(24, 24, 24))
-        );
-        CambiarGrafoLayout.setVerticalGroup(
-            CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CambiarGrafoLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(CambiarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CambiarGrafoLayout.createSequentialGroup()
-                        .addComponent(AgregarProteina)
-                        .addGap(47, 47, 47)
-                        .addComponent(AgregarArcoBoton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(EliminarProteina))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
-                .addGap(15, 15, 15)
-                .addComponent(Salir2)
-                .addGap(36, 36, 36))
-        );
+        CambiarGrafo.getContentPane().add(AgregarArcoBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 130, 60));
 
         jButton1.setText("Eliminar Nodo ");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
-        setMaximumSize(new java.awt.Dimension(1000, 390));
-        setMinimumSize(new java.awt.Dimension(1000, 390));
+        setBackground(new java.awt.Color(204, 204, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(new java.awt.Color(0, 0, 0));
+        setMaximumSize(new java.awt.Dimension(1100, 580));
+        setMinimumSize(new java.awt.Dimension(1100, 580));
         setPreferredSize(new java.awt.Dimension(1000, 390));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -141,56 +175,76 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setText("Caracteristicas del programa:");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
+        CargarRedDeProteinas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         CargarRedDeProteinas.setText("Cargar Red De Proteinas");
+        CargarRedDeProteinas.setMaximumSize(new java.awt.Dimension(157, 40));
+        CargarRedDeProteinas.setMinimumSize(new java.awt.Dimension(157, 40));
         CargarRedDeProteinas.addActionListener(this::CargarRedDeProteinasActionPerformed);
-        getContentPane().add(CargarRedDeProteinas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 200, 20));
+        getContentPane().add(CargarRedDeProteinas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 200, 50));
 
-        Dijkstra.setText("Calcular Ruta Metabolica");
+        Dijkstra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Dijkstra.setText("Calcular Ruta Metabolica (Dijkstra)");
         Dijkstra.addActionListener(this::DijkstraActionPerformed);
-        getContentPane().add(Dijkstra, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 230, 20));
+        getContentPane().add(Dijkstra, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 410, 50));
 
+        Hubs.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Hubs.setText("Indentificar Hubs");
         Hubs.setMaximumSize(new java.awt.Dimension(211, 23));
         Hubs.addActionListener(this::HubsActionPerformed);
-        getContentPane().add(Hubs, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 200, 20));
+        getContentPane().add(Hubs, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 200, 50));
 
+        VisualizarGrafo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         VisualizarGrafo.setText("Visualizar Grafo");
         VisualizarGrafo.addActionListener(this::VisualizarGrafoActionPerformed);
-        getContentPane().add(VisualizarGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 170, 20));
+        getContentPane().add(VisualizarGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 200, 50));
 
+        Guardar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Guardar.setText("Guardar Cambios");
         Guardar.addActionListener(this::GuardarActionPerformed);
-        getContentPane().add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 40, 250, 40));
+        getContentPane().add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 410, 60));
 
+        ModificarGrafo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ModificarGrafo.setText("Modificar Grafo");
         ModificarGrafo.addActionListener(this::ModificarGrafoActionPerformed);
-        getContentPane().add(ModificarGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 170, 20));
+        getContentPane().add(ModificarGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 200, 50));
 
         Salir1.setText("Salir");
         Salir1.addActionListener(this::Salir1ActionPerformed);
-        getContentPane().add(Salir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, 130, 40));
+        getContentPane().add(Salir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 440, 130, 40));
 
         jLabel4.setText("Status");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 172, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 470, -1));
 
-        DeteccionComp.setText("Deteccion de Complejos proteicos");
+        DeteccionComp.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        DeteccionComp.setText("Deteccion de Complejos proteicos (DFS)");
         DeteccionComp.addActionListener(this::DeteccionCompActionPerformed);
-        getContentPane().add(DeteccionComp, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 230, 20));
+        getContentPane().add(DeteccionComp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 410, 50));
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 980, 250));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 570, 490));
+
+        jLabel3.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setText("BioGraph: Análisis de Interacciones Proteicas ");
+        jLabel3.setToolTipText("");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 410, 40));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setText("para el descubrimiento de Farmacos");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 350, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -199,6 +253,7 @@ public class Principal extends javax.swing.JFrame {
     */
     private void VisualizarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarGrafoActionPerformed
         RefrescarGrafo();
+        jLabel1.setText("Puedes hacer zoom con la rueda del raton y puedes moverte con el entorno con las flechas del teclado");
     }//GEN-LAST:event_VisualizarGrafoActionPerformed
 
     /**
@@ -858,7 +913,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
